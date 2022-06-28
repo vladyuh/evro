@@ -170,30 +170,21 @@
   &__date{
     background: #FFFFFF;
     border-radius: 8px;
-    padding-top: 20px;
-
-    .datepicker-controls .next-btn, .datepicker-controls .prev-btn{
-      padding: 0;
-      width: 28px;
-      height: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    
+    .vfc-main-container{
+      box-shadow: none !important;
     }
 
-    .datepicker-header .datepicker-controls{
-      display: flex;
-      align-items: center;
-      margin-bottom: 20px;
-      padding: 0 16px;
+    .vfc-navigation-buttons,
+    .vfc-separately-navigation-buttons{
+      margin-top: 0;
     }
 
-    .datepicker-main{
-      padding: 0 5px 16px;
+    .vfc-content{
       font-family: "Open Sans", sans-serif;
     }
 
-    .datepicker-controls .view-switch{
+    .vfc-top-date{
       pointer-events: none;
       font-weight: 700;
       font-size: 20px;
@@ -203,35 +194,21 @@
       font-family: "Raleway", sans-serif;
     }
 
-    .datepicker-view .dow{
-      text-transform: uppercase;
-      font-weight: 600;
-      font-size: 14px;
-      line-height: 145%;
-      text-align: center;
-      color: #242629;
-    }
-
-    .datepicker-picker span{
-      font-weight: 600;
-      font-size: 14px;
-      line-height: 145%;
-      text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 37px !important;
-    }
-
-    .datepicker-cell.selected,
-    .datepicker-cell.selected:hover{
+    .vfc-hover:not(.vfc-disabled){
+      color: #fff !important;
       background: #0088CC;
-      border-radius: 14px;
+      cursor: pointer;
     }
 
-    .datepicker-cell.selected.focused,
-    .datepicker-cell.selected.focused:hover{
-      background: #005F8F;
+    .vfc-hover:not(.vfc-disabled):hover,
+    .vfc-marked:not(.vfc-disabled)
+    {
+      background: #005F8F !important;
+    }
+    
+
+    .vfc-disabled:hover{
+       background: none !important;
     }
 
   }
@@ -243,12 +220,10 @@
   }
 
   &__time{
-    margin: 0 -4px;
     display: flex;
     flex-wrap: wrap;
     .item{
       position: relative;
-      background: #0088CC;
       border-radius: 8px;
       font-weight: 600;
       font-size: 14px;
@@ -256,7 +231,27 @@
       text-align: center;
       color: #FFFFFF;
       padding: 6px 12px;
-      margin: 0 4px;
+      margin-right: 4px;
+      cursor: pointer;
+
+      span{
+        position: relative;
+        z-index: 1;
+      }
+
+      &::after{
+        content: "";
+        background: #0088CC;
+        border-radius: 8px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+      }
 
       input{
         position: absolute;

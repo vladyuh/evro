@@ -14,7 +14,9 @@
     "vue": "^2.6.14",
     "vue-functional-calendar": "^2.9.95",
     "vue-router": "^3.5.1",
-    "vuex": "^3.6.2"
+    "vue-yandex-maps": "^0.11.9",
+    "vuex": "^3.6.2",
+    "ymaps": "^0.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

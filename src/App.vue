@@ -26,6 +26,7 @@ if ("loading" in HTMLImageElement.prototype) {
   script.src = "/js/lazysizes.min.js";
   document.body.appendChild(script);
 }
+
 </script>
 <style lang="scss">
 @import "styles/main.scss";

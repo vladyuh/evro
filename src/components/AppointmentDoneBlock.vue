@@ -3,11 +3,6 @@
     <div class="top-bar">
       <div class="container">
         <div class="top-bar__title">Вы успешно<br> записаны на:</div>
-        <a href="/" class="top-bar__close">
-          <svg width="28" height="28">
-            <use xlink:href="/img/sprites/sprite.svg#icon_x_small_border"></use>
-          </svg>
-        </a>
       </div>
     </div>
     <div class="appointment-block__success">

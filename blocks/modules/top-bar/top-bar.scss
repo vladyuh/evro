@@ -36,4 +36,9 @@
     right: 16px;
   }
 
+  &__back,
+  &__close{
+    cursor: pointer;
+  }
+
 }

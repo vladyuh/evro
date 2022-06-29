@@ -3,15 +3,11 @@
     <div class="top-bar">
       <div class="container">
         <div class="top-bar__back" v-show="activeStep!==0" v-on:click="activeStep=moveBack(activeStep)">
-          <svg width="28" height="28">
-            <use xlink:href="/img/sprites/sprite.svg#icon_chevron_left_small_border"></use>
-          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 28 28" id="icon_chevron_left_small_border"><path d="M16 18l-4-4 4-4" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 1h12v-2H8v2zm19 7v12h2V8h-2zm-7 19H8v2h12v-2zM1 20V8h-2v12h2zm7 7a7 7 0 01-7-7h-2a9 9 0 009 9v-2zm19-7a7 7 0 01-7 7v2a9 9 0 009-9h-2zM20 1a7 7 0 017 7h2a9 9 0 00-9-9v2zM8-1a9 9 0 00-9 9h2a7 7 0 017-7v-2z" fill="#fff"/></svg>
         </div>
         <div class="top-bar__title">{{ showTitle(activeStep) }}</div>
         <a href="/" class="top-bar__close">
-          <svg width="28" height="28">
-            <use xlink:href="/img/sprites/sprite.svg#icon_x_small_border"></use>
-          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 28 28" id="icon_x_small_border"><path d="M18 10l-8 8M10 10l8 8" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 1h12v-2H8v2zm19 7v12h2V8h-2zm-7 19H8v2h12v-2zM1 20V8h-2v12h2zm7 7a7 7 0 01-7-7h-2a9 9 0 009 9v-2zm19-7a7 7 0 01-7 7v2a9 9 0 009-9h-2zM20 1a7 7 0 017 7h2a9 9 0 00-9-9v2zM8-1a9 9 0 00-9 9h2a7 7 0 017-7v-2z" fill="#fff"/></svg>
         </a>
       </div>
     </div>

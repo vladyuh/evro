@@ -11,8 +11,8 @@
           <div class="popup-filters__section">
             <div class="title">Направления</div>
             <div class="popup-filters__directions">
-              <label class="checkbox" v-for="(direction,i) in directions" :key="i">
-                <input type="checkbox" v-model="chosenDir" v-bind:value="direction.name" name="directions">
+              <label class="checkbox" v-for="(direction,i) in direct" :key="i">
+                <input type="checkbox" v-bind:value="direction.value" name="directions">
                 <span class="checkbox__elem"></span>
                 <span class="checkbox__text">{{direction.name}}</span>
               </label>
@@ -21,10 +21,10 @@
           <div class="popup-filters__section">
             <div class="title">Сортировать по</div>
             <div class="popup-filters__sort">
-              <label class="radio">
-                <input type="radio" checked="" value="Алфавиту" name="sort">
+              <label class="radio" v-for="(sortItem,i) in sort" :key="i">
+                <input type="radio" v-bind:value="sortItem.name" name="sort">
                 <span class="radio__elem"></span>
-                <span class="radio__text">Алфавиту</span>
+                <span class="radio__text">{{sortItem}}</span>
               </label>
             </div>
           </div>
@@ -40,16 +40,15 @@
 <script>
 export default {
   name: 'FiltersPopup',
-  props: ['directions', 'sortBy','dirChosen'],
+  props: ['directions', 'sortBy'],
   data: function () {
     return {
       direct: this.directions,
       sort: this.sortBy,
-      chosenDir: this.dirChosen
     }
   },
   mounted() {
-  }
+  },
 }
 </script>
 

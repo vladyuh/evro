@@ -1,7 +1,7 @@
 <template>
   <div class="page-title">
     <div class="container">
-      <div class="page-title__text">{{pageTitle}}</div>
+      <div class="page-title__text">{{this.title}}</div>
     </div>
   </div>
 </template>
@@ -13,7 +13,6 @@ export default {
   props: ['title'],
   data: function () {
     return {
-      pageTitle: this.title,
     }
   },
   mounted() {

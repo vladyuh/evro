@@ -1,7 +1,7 @@
 <template>
   <div class="bottom-bar">
     <div class="container">
-      <a class="bottom-bar__item" v-bind:href="item.link" v-for="(item, i) in items" :key="i" v-bind:class="{'center': item.isCenter, 'is-active': item.isActive}">
+      <a class="bottom-bar__item" v-bind:href="item.link" v-for="(item, i) in this.bottom_items" :key="i" v-bind:class="{'center': item.isCenter, 'is-active': item.isActive}">
         <div class="icon" v-html="item.icon">
         </div>
         <div class="caption">{{item.name}}</div>
@@ -17,7 +17,6 @@ export default {
   props: ['bottom_items'],
   data: function (){
     return {
-      items: this.bottom_items
     }
   },
 }

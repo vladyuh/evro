@@ -44,7 +44,7 @@
         </div>
       </div>
     </div>
-    <FiltersPopup :directions="direct" :sortBy="sort" @onChange="changeFilter($event)"></FiltersPopup>
+    <FiltersPopup :directions="direct" :sortBy="sort" @onChange="changeFilter($event)" @onSort="changeSort($event)"></FiltersPopup>
     <BottomAppbar :bottom_items="menuItems"></BottomAppbar>
   </div>
 </template>
@@ -76,14 +76,14 @@ export default {
           job: "Врач-реабилитолог",
           link: "Записаться на прием",
           image: "/img/common/doc-1.jpg",
-          withLink: "#"
+          withLink: "#",
         },
         {
           name: "Козакова Оксана Григорьевна",
           job: "Терапевт",
           link: "Записаться на прием",
           image: "/img/common/doc-2.jpg",
-          withLink: "#"
+          withLink: "#",
         },
         {
           name: "Козакова Оксана Григорьевна",
@@ -107,42 +107,47 @@ export default {
           job: "Врач-гастроэнтеролог",
           link: "Записаться на прием",
           image: "/img/common/dc-2.jpg",
-          withLink: "#"
+          withLink: "#",
+          dir: "gast"
         },
         {
           name: "Смертин Николай Владимирович",
           job: "Врач-оториноларинголог",
           link: "Записаться на прием",
           image: "/img/common/dc-3.jpg",
-          withLink: "#"
+          withLink: "#",
+          dir: "otor"
         },
         {
           name: "Зингалев Сергей Олегович",
           job: "Врач онколог-хирург, маммолог",
           link: "Записаться на прием",
           image: "/img/common/dc-4.jpg",
-          withLink: "#"
+          withLink: "#",
+          dir: "onko"
         },
         {
           name: "Козакова Оксана Григорьевна",
           job: "Терапевт",
           link: "Записаться на прием",
           image: "/img/common/dc-5.jpg",
-          withLink: "#"
+          withLink: "#",
+          dir: "ther"
         },
         {
           name: "Бабров Артем Александрович",
           job: "Врач-травматолог-ортопед",
           link: "Записаться на прием",
           image: "/img/common/dc-7.jpg",
-          withLink: "#"
+          withLink: "#",
+          dir: "orto"
         },
         {
           name: "Басенко Татьяна Валерьевна",
           job: "Врач-акушер-гинеколог",
           link: "Записаться на прием",
           image: "/img/common/dc-8.jpg",
-          withLink: "#"
+          withLink: "gine"
         },
         {
           name: "Багрицевич Николай Викторович",
@@ -158,7 +163,8 @@ export default {
           job: "Врач сосудистый хирург",
           link: "Записаться на прием",
           image: "/img/common/dc-10.jpg",
-          withLink: "/doctors/doctor/"
+          withLink: "/doctors/doctor/",
+          dir: "hiru"
         }
       ],
       direct: [{
@@ -166,11 +172,48 @@ export default {
         value: "derm",
       },
         {
+          name: "Гастроэнтерология",
+          value: "gast",
+        },
+        {
+          name: "Оториноларингология",
+          value: "otor",
+        },
+        {
+          name: "Онкология",
+          value: "onko",
+        },
+        {
+          name: "Терапия",
+          value: "ther",
+        },
+        {
+          name: "Ортопедия",
+          value: "orto",
+        },
+        {
+          name: "Гинекология",
+          value: "gine",
+        },
+        {
           name: "Урология",
           value: "yrol",
-        }
+        },
+        {
+          name: "Хирургия",
+          value: "hiru",
+        },
       ],
-      sort: [],
+      sort: [
+        {
+          name: "По алфавиту",
+          value: "apha",
+        },
+        {
+          name: "По направлениям",
+          value: "dir",
+        },
+      ],
       menuItems: [
         {
           icon: "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
@@ -224,12 +267,33 @@ export default {
         }
       ],
       selectedDir: [],
+      selectedSort: ''
     }
   },
   methods: {
     changeFilter: function (event) {
       this.selectedDir = event.dirChosen;
       this.filterDocs()
+    },
+    changeSort: function (event) {
+      this.selectedSort = event.sortChosen;
+      this.sortDocs()
+    },
+    sortDocs: function (){
+      let docs = this.filterDocs();
+        let sortedDocs = docs.sort((a,b)=>{
+          if(this.selectedSort==="alph"){
+            return a.name.localeCompare(b.name)
+          }
+          else if(this.selectedSort==="dir"){
+            return a.dir.localeCompare(b.dir)
+          }
+          else {
+            return false
+          }
+        })
+        console.log(sortedDocs)
+        return sortedDocs
     },
     filterDocs: function () {
       let newDocs = this.alldocs.filter((item) => {

@@ -1,8 +1,8 @@
 <template>
   <div class="services-sections__section">
-    <div class="block-title">{{title}}</div>
+    <div class="block-title">{{this.title}}</div>
     <ul class="services-sections__items">
-      <li class="services-sections__item" v-for="(service,i) in services" :key="i" v-bind:class="{'has-submenu': service.items}">
+      <li class="services-sections__item" v-for="(service,i) in this.services" :key="i" v-bind:class="{'has-submenu': service.items}">
         <a v-bind:href="service.link">{{service.name}}</a>
         <ul class="services-sections__submenu" v-if="service.items">
           <li class="services-sections__item services-sections__subitem" v-for="(item,i) in service.items" :key="i">
@@ -22,8 +22,6 @@ export default {
   props: ['title', 'services'],
   data: function () {
     return {
-      name: this.title,
-      items: this.services,
     }
   },
   methods: {

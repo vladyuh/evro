@@ -1,6 +1,6 @@
 <template>
   <div class="doctors-block__items">
-        <div class="doctors-block__item" v-for="(item, i) in doctors" :key="i" v-bind:class="{'doctors-block__item--directions': item.text || item.features}">
+        <div class="doctors-block__item" v-for="(item, i) in this.doctors" :key="i" v-bind:class="{'doctors-block__item--directions': item.text || item.features}">
           <div class="text">
             <a class="text-name" v-bind:href="item.withLink">{{item.name}}</a>
             <div class="text-caption">{{item.job}}</div>
@@ -30,7 +30,6 @@ export default {
   props: ['doctors'],
   data: function () {
     return {
-      items: this.doctors
     }
   },
   methods: {

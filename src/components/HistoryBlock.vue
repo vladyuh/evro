@@ -1,6 +1,6 @@
 <template>
   <div class="history-block__items">
-    <a class="history-block__item" v-for="(item, i) in items" :key="i" v-bind:href="item.link">
+    <a class="history-block__item" v-for="(item, i) in this.history" :key="i" v-bind:href="item.link">
       <div class="date">{{item.date}}</div>
       <div class="title">{{item.name}}</div>
     </a>
@@ -14,7 +14,6 @@ export default {
   props: ['history'],
   data: function () {
     return {
-      items: this.history
     }
   },
   mounted() {

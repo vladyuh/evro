@@ -30,7 +30,7 @@
     <div class="services-block">
       <div class="container">
         <div class="block-title services-block__title"><span>Наши услуги</span></div>
-        <ServicesBlock></ServicesBlock>
+        <ServicesBlock :services="services"></ServicesBlock>
       </div>
     </div>
     <div class="stocks-block">
@@ -121,6 +121,32 @@ export default {
           name: "Ортопантомограмма",
           planned: "Запланировано на 20.04.22, 9:00",
           image: "/img/common/vis-2.jpg"
+        },
+      ],
+      services: [
+        {
+          name: "Записаться на прием",
+          image: "/img/sprites/sprite.svg#ser-1"
+        },
+        {
+          name: "Мой паспорт здоровья",
+          image: "/img/sprites/sprite.svg#ser-2"
+        },
+        {
+          name: "Записаться на диагностику",
+          image: "/img/sprites/sprite.svg#ser-3"
+        },
+        {
+          name: "Сдать        анализы",
+          image: "/img/sprites/sprite.svg#ser-4"
+        },
+        {
+          name: "Хирургия",
+          image: "/img/sprites/sprite.svg#ser-5"
+        },
+        {
+          name: "Программы",
+          image: "/img/sprites/sprite.svg#ser-6"
         },
       ],
       analyzes: [

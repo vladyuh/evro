@@ -1,6 +1,6 @@
 <template>
   <div class="services-block__items">
-    <a class="services-block__item" href="#" v-for="(item, i) in items" :key="i">
+    <a class="services-block__item" href="#" v-for="(item, i) in this.services" :key="i">
       <div class="icon">
         <svg width="64" height="64">
           <use :xlink:href="item.image"></use>
@@ -15,34 +15,9 @@
 
 export default {
   name: 'ServicesBlock',
+  props: ['services'],
   data: function () {
     return {
-      items: [
-        {
-          name: "Записаться на прием",
-          image: "/img/sprites/sprite.svg#ser-1"
-        },
-        {
-          name: "Мой паспорт здоровья",
-          image: "/img/sprites/sprite.svg#ser-2"
-        },
-        {
-          name: "Записаться на диагностику",
-          image: "/img/sprites/sprite.svg#ser-3"
-        },
-        {
-          name: "Сдать        анализы",
-          image: "/img/sprites/sprite.svg#ser-4"
-        },
-        {
-          name: "Хирургия",
-          image: "/img/sprites/sprite.svg#ser-5"
-        },
-        {
-          name: "Программы",
-          image: "/img/sprites/sprite.svg#ser-6"
-        },
-      ]
     }
   },
   mounted() {

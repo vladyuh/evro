@@ -100,6 +100,16 @@
       </form>
       <div class="appointment-block" v-show="activeStep===1">
         <div class="container">
+          <div class="searchbox">
+            <div class="input input-search input-icon">
+              <div class="input-icon__wrap"><span class="icon">
+                  <svg width="20" height="20">
+                    <use xlink:href="/img/sprites/sprite.svg#icon_search"></use>
+                  </svg></span>
+                <input type="search" placeholder="Найти врача или услугу">
+              </div>
+            </div>
+          </div>
           <div class="appointment-block__directions" v-if="!doctorChosen.length">
             <div class="appointment-block__direction" v-for="(item, i) in services" :key="i">
               <label>{{ item.name }}

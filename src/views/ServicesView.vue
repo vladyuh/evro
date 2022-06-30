@@ -1,63 +1,23 @@
 <template>
-  <div class="mainpage">
+  <div class="services-page">
     <UserBlock></UserBlock>
-    <AdBanner></AdBanner>
-    <div class="doctors-block">
+    <PageTitle :title="pageTitle"></PageTitle>
+    <div class="searchbox">
       <div class="container">
-        <div class="block-title doctors-block__title">
-          <span>Любимые врачи</span>
-          <a href="#" class="block-title__link">
-            <span>Все</span>
-            <svg width="24" height="24"><use xlink:href="/img/sprites/sprite.svg#icon_chevron_right"></use></svg>
-          </a>
+        <div class="input input-search input-icon">
+          <div class="input-icon__wrap"><span class="icon">
+                  <svg width="20" height="20">
+                    <use xlink:href="/img/sprites/sprite.svg#icon_search"></use>
+                  </svg></span>
+            <input type="search" placeholder="Найти врача или услугу">
+          </div>
         </div>
-        <FavoriteDoctors :doctors="doctors"></FavoriteDoctors>
       </div>
     </div>
-    <div class="visits-block">
+    <div class="services-sections">
       <div class="container">
-        <div class="block-title visits-block__title">
-          <span>План визитов</span>
-          <a class="block-title__link" href="#"><span>Все</span>
-            <svg width="24" height="24">
-              <use xlink:href="/img/sprites/sprite.svg#icon_chevron_right"></use>
-            </svg>
-          </a>
-        </div>
-        <VisitsBlock :visits="visits"></VisitsBlock>
-      </div>
-    </div>
-    <div class="services-block">
-      <div class="container">
-        <div class="block-title services-block__title"><span>Наши услуги</span></div>
-        <ServicesBlock></ServicesBlock>
-      </div>
-    </div>
-    <div class="stocks-block">
-      <div class="container">
-        <div class="block-title stocks-block__title">
-          <span>Акции</span>
-          <a class="block-title__link" href="#"><span>Все</span>
-            <svg width="24" height="24">
-              <use xlink:href="/img/sprites/sprite.svg#icon_chevron_right"></use>
-            </svg>
-          </a>
-        </div>
-        <StocksBlock></StocksBlock>
-      </div>
-    </div>
-    <div class="analyzes-block">
-      <div class="container">
-        <div class="block-title analyzes-block__title">
-          <span>Новые анализы</span>
-          <a class="block-title__link" href="#">
-            <span>Все</span>
-            <svg width="24" height="24">
-              <use xlink:href="/img/sprites/sprite.svg#icon_chevron_right"></use>
-            </svg>
-          </a>
-        </div>
-        <AnalyzesBlock :analyzes="analyzes"></AnalyzesBlock>
+        <ServicesSection :title="diagTitle" :services="diagItems"></ServicesSection>
+        <ServicesSection :title="cureTitle" :services="cureItems"></ServicesSection>
       </div>
     </div>
     <BottomAppbar :bottom_items="menuItems"></BottomAppbar>
@@ -67,72 +27,95 @@
 <script>
 
 import UserBlock from '@/components/UserBlock.vue'
-import AdBanner from '@/components/AdBanner.vue'
-import FavoriteDoctors from "@/components/Favorites";
-import VisitsBlock from "@/components/VisitsBlock";
-import ServicesBlock from "@/components/ServicesBlock";
-import StocksBlock from "@/components/StocksBlock";
-import AnalyzesBlock from "@/components/AnalyzesBlock";
 import BottomAppbar from "@/components/BottomAppbar";
+import PageTitle from "@/components/PageTitle";
+import ServicesSection from "@/components/ServicesSection";
 
 export default {
-  name: 'HomeView',
+  name: 'ServicesView',
   components: {
+    ServicesSection,
+    PageTitle,
     BottomAppbar,
     UserBlock,
-    AdBanner,
-    FavoriteDoctors,
-    VisitsBlock,
-    ServicesBlock,
-    StocksBlock,
-    AnalyzesBlock,
   },
-  data: function (){
+  data: function () {
     return {
-      doctors: [
+      pageTitle: "Услуги",
+      diagTitle: "Диагностика",
+      diagItems: [
         {
-          name: "Чудовский Олег Анатольевич",
-          job: "Врач-реабилитолог",
-          link: "Записаться на прием",
-          image: "/img/common/doc-1.jpg"
-        },
-        {
-          name: "Козакова Оксана Григорьевна",
-          job: "Терапевт",
-          link: "Записаться на прием",
-          image: "/img/common/doc-2.jpg"
-        },
-        {
-          name: "Козакова Оксана Григорьевна",
-          job: "Терапевт",
-          link: "Записаться на прием",
-          image: "/img/common/doc-3.jpg"
-        },
-      ],
-      visits: [
-        {
-          link: "#",
           name: "Ортопантомограмма",
-          planned: "Запланировано на 20.04.22, 9:00",
-          image: "/img/common/vis-1.jpg"
-        },
-        {
           link: "#",
-          name: "Ортопантомограмма",
-          planned: "Запланировано на 20.04.22, 9:00",
-          image: "/img/common/vis-2.jpg"
         },
+        {
+          name: "Ультразвуковая диагностика",
+          link: "#",
+        },
+        {
+          name: "Функциональная диагностика",
+          link: "#",
+        },
+        {
+          name: "Эндоскопия",
+          link: "#",
+        }
       ],
-      analyzes: [
+      cureTitle: "Лечение",
+      cureItems: [
         {
-          date: "14 апреля",
-          title: "Клинический анализ крови",
-          ready: "Готов 18 апреля"
+          name: "Гастроэнтерология",
+          link: "#",
         },
         {
-          date: "13 апреля",
-          title: "Определение уровня АЛТ в крови",
-          ready: "Готов 17 апреля"
+          name: "Гинекология",
+          link: "#",
+        },
+        {
+          name: "Дерматология",
+          link: "#",
+          items: [{
+            name: "Дерматология 1",
+            link: "#"
+          }],
+        },
+        {
+          name: "Малоинвазивная хирургия",
+          link: "#",
+        },
+        {
+          name: "Ортопедия и травматология",
+          link: "/services/service/",
+        },
+        {
+          name: "Оториноларингология",
+          link: "#",
+          items: [
+            {
+              name: "Первичный прием врачом-оториноларингологом",
+              link: "#"
+            },
+            {
+              name: "Повторный прием врачом-оториноларингологом",
+              link: "#"
+            }
+          ],
+        },
+        {
+          name: "Терапия",
+          link: "#",
+        },
+        {
+          name: "Тракционная терапия",
+          link: "#",
+        },
+        {
+          name: "Урология",
+          link: "#",
+        },
+        {
+          name: "Хирургия",
+          link: "#",
         },
       ],
       menuItems: [
@@ -142,6 +125,7 @@ export default {
               "          </svg>",
           name: "Услуги",
           isCenter: false,
+          isActive: true,
           link: "/services/",
         },
         {
@@ -192,5 +176,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import "styles/index.scss";
+@import "styles/services.scss";
 </style>

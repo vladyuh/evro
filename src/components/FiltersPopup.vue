@@ -12,7 +12,7 @@
             <div class="title">Направления</div>
             <div class="popup-filters__directions">
               <label class="checkbox" v-for="(direction,i) in direct" :key="i">
-                <input type="checkbox" v-bind:value="direction.value" name="directions">
+                <input type="checkbox" v-model="dirChosen" v-bind:value="direction.value" name="directions">
                 <span class="checkbox__elem"></span>
                 <span class="checkbox__text">{{direction.name}}</span>
               </label>
@@ -45,10 +45,18 @@ export default {
     return {
       direct: this.directions,
       sort: this.sortBy,
+      dirChosen: [],
     }
   },
   mounted() {
   },
+  watch: {
+    dirChosen: function (){
+      this.$emit('onChange',{
+        dirChosen: this.dirChosen
+      })
+    }
+  }
 }
 </script>
 

@@ -35,6 +35,7 @@
     font-size: 16px;
     line-height: 150%;
     color: #FFFFFF;
+    display: block;
 
     input{
       display: none;
@@ -51,6 +52,7 @@
     }
 
     span{
+      pointer-events: none;
       &.expand{
         display: inline-block;
       }
@@ -78,10 +80,3 @@
     }
   }
 }
-
-
-@import "../blocks/modules/user-block/user-block.scss";
-@import "../blocks/modules/top-bar/top-bar.scss";
-@import "../blocks/modules/searchbox/searchbox.scss";
-@import "../blocks/modules/favorites/favorites.scss";
-@import "../blocks/modules/services-section/services-section.scss";

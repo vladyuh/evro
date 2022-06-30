@@ -77,10 +77,10 @@
   }
 
   &__link{
+    display: block;
     width: 100%;
     margin-bottom: 8px;
-    padding: 12px;
-    padding-right: 36px;
+    padding: 12px 36px 12px 12px;
     background: #FFFFFF;
     border-radius: 8px;
     font-weight: 400;
@@ -108,7 +108,3 @@
 
   }
 }
-
-@import "../blocks/modules/user-block/user-block.scss";
-@import "../blocks/modules/top-bar/top-bar.scss";
-@import "../blocks/modules/analyzes/analyzes.scss";

@@ -1,63 +1,34 @@
 <template>
-  <div class="mainpage">
+  <div class="analyzes-page">
     <UserBlock></UserBlock>
-    <AdBanner></AdBanner>
-    <div class="doctors-block">
+    <PageTitle :title="pageTitle"></PageTitle>
+    <div class="tab-block">
       <div class="container">
-        <div class="block-title doctors-block__title">
-          <span>Любимые врачи</span>
-          <a href="#" class="block-title__link">
-            <span>Все</span>
-            <svg width="24" height="24"><use xlink:href="/img/sprites/sprite.svg#icon_chevron_right"></use></svg>
-          </a>
+        <div class="tab-block__toggles">
+          <div class="tab-block__toggle" v-bind:class="{'is-active': currentTab===0}" v-on:click="currentTab=0">
+            Ваши анализы
+          </div>
+          <div class="tab-block__toggle" v-bind:class="{'is-active': currentTab===1}" v-on:click="currentTab=1">
+            Запись на анализ
+          </div>
         </div>
-        <FavoriteDoctors :doctors="doctors"></FavoriteDoctors>
-      </div>
-    </div>
-    <div class="visits-block">
-      <div class="container">
-        <div class="block-title visits-block__title">
-          <span>План визитов</span>
-          <a class="block-title__link" href="#"><span>Все</span>
-            <svg width="24" height="24">
-              <use xlink:href="/img/sprites/sprite.svg#icon_chevron_right"></use>
-            </svg>
-          </a>
+        <div class="tab-block__contents">
+          <div class="tab-block__content" v-bind:class="{'is-active': currentTab===0}">
+            <div class="analyzes-block">
+              <div class="block-title analyzes-block__title"><span>Новые результаты анализов</span></div>
+              <AnalyzesBlock :analyzes="analyzes"></AnalyzesBlock>
+            </div>
+            <div class="history-block">
+              <div class="block-title history-block__title"><span>История анализов</span></div>
+              <HistoryBlock :history="history"></HistoryBlock>
+            </div>
+          </div>
+          <div class="tab-block__content" v-bind:class="{'is-active': currentTab===1}">
+            <div class="analyzes-links">
+              <a class="analyzes-links__link" v-for="(link,i) in analyzesLinks" :key="i" v-bind:href="link.link">{{link.name}}</a>
+            </div>
+          </div>
         </div>
-        <VisitsBlock :visits="visits"></VisitsBlock>
-      </div>
-    </div>
-    <div class="services-block">
-      <div class="container">
-        <div class="block-title services-block__title"><span>Наши услуги</span></div>
-        <ServicesBlock></ServicesBlock>
-      </div>
-    </div>
-    <div class="stocks-block">
-      <div class="container">
-        <div class="block-title stocks-block__title">
-          <span>Акции</span>
-          <a class="block-title__link" href="#"><span>Все</span>
-            <svg width="24" height="24">
-              <use xlink:href="/img/sprites/sprite.svg#icon_chevron_right"></use>
-            </svg>
-          </a>
-        </div>
-        <StocksBlock></StocksBlock>
-      </div>
-    </div>
-    <div class="analyzes-block">
-      <div class="container">
-        <div class="block-title analyzes-block__title">
-          <span>Новые анализы</span>
-          <a class="block-title__link" href="#">
-            <span>Все</span>
-            <svg width="24" height="24">
-              <use xlink:href="/img/sprites/sprite.svg#icon_chevron_right"></use>
-            </svg>
-          </a>
-        </div>
-        <AnalyzesBlock :analyzes="analyzes"></AnalyzesBlock>
       </div>
     </div>
     <BottomAppbar :bottom_items="menuItems"></BottomAppbar>
@@ -65,75 +36,77 @@
 </template>
 
 <script>
-
-import UserBlock from '@/components/UserBlock.vue'
-import AdBanner from '@/components/AdBanner.vue'
-import FavoriteDoctors from "@/components/Favorites";
-import VisitsBlock from "@/components/VisitsBlock";
-import ServicesBlock from "@/components/ServicesBlock";
-import StocksBlock from "@/components/StocksBlock";
-import AnalyzesBlock from "@/components/AnalyzesBlock";
+import UserBlock from "@/components/UserBlock";
 import BottomAppbar from "@/components/BottomAppbar";
+import PageTitle from "@/components/PageTitle";
+import HistoryBlock from "@/components/HistoryBlock";
+import AnalyzesBlock from "@/components/AnalyzesBlock";
 
 export default {
-  name: 'HomeView',
+  name: 'AnalyzesView',
   components: {
-    BottomAppbar,
-    UserBlock,
-    AdBanner,
-    FavoriteDoctors,
-    VisitsBlock,
-    ServicesBlock,
-    StocksBlock,
     AnalyzesBlock,
+    HistoryBlock,
+    PageTitle,
+    UserBlock,
+    BottomAppbar
   },
-  data: function (){
+  data: function () {
     return {
-      doctors: [
-        {
-          name: "Чудовский Олег Анатольевич",
-          job: "Врач-реабилитолог",
-          link: "Записаться на прием",
-          image: "/img/common/doc-1.jpg"
-        },
-        {
-          name: "Козакова Оксана Григорьевна",
-          job: "Терапевт",
-          link: "Записаться на прием",
-          image: "/img/common/doc-2.jpg"
-        },
-        {
-          name: "Козакова Оксана Григорьевна",
-          job: "Терапевт",
-          link: "Записаться на прием",
-          image: "/img/common/doc-3.jpg"
-        },
-      ],
-      visits: [
-        {
-          link: "#",
-          name: "Ортопантомограмма",
-          planned: "Запланировано на 20.04.22, 9:00",
-          image: "/img/common/vis-1.jpg"
-        },
-        {
-          link: "#",
-          name: "Ортопантомограмма",
-          planned: "Запланировано на 20.04.22, 9:00",
-          image: "/img/common/vis-2.jpg"
-        },
-      ],
+      pageTitle: "Анализы",
+      currentTab: 0,
       analyzes: [
         {
+          link: "/analyzes/view/",
           date: "14 апреля",
           title: "Клинический анализ крови",
           ready: "Готов 18 апреля"
         },
         {
+          link: "#",
           date: "13 апреля",
           title: "Определение уровня АЛТ в крови",
           ready: "Готов 17 апреля"
         },
+      ],
+      history: [
+        {
+          link: "#",
+          name: "Общеклинические исследования",
+          date: "22 марта"
+        },
+        {
+          link: "#",
+          name: "Биохимические исследования",
+          date: "12 февраля"
+        },
+        {
+          link: "#",
+          name: "Иммунологические исследования",
+          date: "29 декабря 2021"
+        },
+      ],
+      analyzesLinks: [
+        {
+          name: "Общеклинические исследования",
+          link: "#",
+        },
+        {
+          name: "Гематологические исследования",
+          link: "/analyzes/appointment",
+        },
+        {
+          name: "Биохимические исследования",
+          link: "#",
+        },
+        {
+          name: "Гистологические и цитологические исследования",
+          link: "#",
+        },
+        {
+          name: "Иммунологические исследования",
+          link: "#",
+        }
       ],
       menuItems: [
         {
@@ -155,6 +128,7 @@ export default {
           name: "Анализы",
           isCenter: false,
           link: "/analyzes/",
+          isActive: true,
         },
         {
           icon: "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
@@ -187,10 +161,11 @@ export default {
         }
       ]
     }
-  }
+  },
+  methods: {},
 }
 </script>
 
 <style lang="scss">
-@import "styles/index.scss";
+@import "styles/analyzes.scss";
 </style>

@@ -69,8 +69,8 @@ export default {
   data: function () {
     return {
       pageTitle: "Врачи",
-      currentTab: 0,
-      searchQuery: [],
+      currentTab: 1,
+      searchQuery: '',
       favorites: [
         {
           name: "Чудовский Олег Анатольевич",
@@ -273,54 +273,55 @@ export default {
     }
   },
   methods: {
+
     changeFilter: function (event) {
       this.selectedDir = event.dirChosen;
       this.filterDocs()
     },
+
     changeSort: function (event) {
       this.selectedSort = event.sortChosen;
     },
+
     filterDocs: function () {
-      let newDocs = this.alldocs.filter((item) => {
-        if (this.selectedDir.indexOf(item.dir) !== -1) {
-          return true
-        }
-      })
-      if (newDocs.length) {
-        if(this.selectedSort){
-          newDocs.sort((a,b) => {
-            if(this.selectedSort === "apha"){
-              if (a.name > b.name) {
-                return 1;
-              }
-              if (a.name < b.name) {
-                return -1;
-              }
-            }
-            if(this.selectedSort === "dir"){
-              if (a.dir > b.dir) {
-                return 1;
-              }
-              if (a.dir < b.dir) {
-                return -1;
-              }
-            }
+
+      let allDoctors = this.alldocs;
+
+      //direction
+      if(this.selectedDir.length){
+        allDoctors = allDoctors.filter((item) => {
+          if (this.selectedDir.indexOf(item.dir) !== -1) {
+            return true
+          }
+        })
+      } 
+
+      //SORT
+      if(this.selectedSort){
+        allDoctors = allDoctors.slice().sort((a,b) => {
+            if(this.selectedSort === "apha")    return (a.name > b.name ? 1 : -1) 
+            if(this.selectedSort === "dir") return (a.dir > b.dir ? 1 : -1) 
           })
-          return newDocs
-        }
-      } else {
-        return this.alldocs
       }
+
+      //find 
+      if(this.searchQuery){
+        allDoctors = allDoctors.filter((item) => {
+          if (item.name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) !== -1) {
+            return true
+          }
+
+        })
+      }
+
+       return allDoctors;
+
+       
 
     },
   },
-  watch: {
-    searchQuery: function () {
-    },
-    checked: function () {
-    }
-  },
-  computed: {}
+ 
+  
 }
 </script>
 

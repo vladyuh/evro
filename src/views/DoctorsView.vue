@@ -69,7 +69,7 @@ export default {
   data: function () {
     return {
       pageTitle: "Врачи",
-      currentTab: 1,
+      currentTab: 0,
       searchQuery: '',
       favorites: [
         {
@@ -148,7 +148,8 @@ export default {
           job: "Врач-акушер-гинеколог",
           link: "Записаться на прием",
           image: "/img/common/dc-8.jpg",
-          withLink: "gine"
+          withLink: "#",
+          dir: "gine"
         },
         {
           name: "Багрицевич Николай Викторович",

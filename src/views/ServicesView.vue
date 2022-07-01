@@ -9,15 +9,15 @@
                   <svg width="20" height="20">
                     <use xlink:href="/img/sprites/sprite.svg#icon_search"></use>
                   </svg></span>
-            <input type="search" placeholder="Найти врача или услугу">
+            <input type="search" v-model="searchQuery" placeholder="Найти врача или услугу">
           </div>
         </div>
       </div>
     </div>
     <div class="services-sections">
       <div class="container">
-        <ServicesSection :title="diagTitle" :services="diagItems"></ServicesSection>
-        <ServicesSection :title="cureTitle" :services="cureItems"></ServicesSection>
+        <ServicesSection :title="diagTitle" :services="filterDiag()"></ServicesSection>
+        <ServicesSection :title="cureTitle" :services="filterCure()"></ServicesSection>
       </div>
     </div>
     <BottomAppbar :bottom_items="menuItems"></BottomAppbar>
@@ -169,7 +169,46 @@ export default {
           isCenter: false,
           link: "/doctors/",
         }
-      ]
+      ],
+      searchQuery: '',
+    }
+  },
+  methods: {
+    filterDiag: function (){
+
+      let allDiag = this.diagItems;
+
+      if(this.searchQuery){
+        allDiag = allDiag.filter((item) => {
+          if (item.name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) !== -1) {
+            return true
+          }
+
+        })
+      }
+
+      return allDiag;
+
+    },
+    filterCure: function (){
+      let allCure = this.cureItems;
+
+      if(this.searchQuery){
+        allCure = allCure.filter((item) => {
+          if (item.name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) !== -1) {
+            return true
+          }
+
+        })
+      }
+
+      return allCure;
+
+    }
+  },
+  watch: {
+    searchQuery: function (){
+      console.log(this.searchQuery)
     }
   }
 }

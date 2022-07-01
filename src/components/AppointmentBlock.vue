@@ -1,5 +1,5 @@
 <template>
-  <div class="appoint-page">
+  <div class="appoint">
     <div class="top-bar">
       <div class="container">
         <div class="top-bar__back" v-show="activeStep!==0" v-on:click="activeStep=moveBack(activeStep)">
@@ -11,8 +11,8 @@
         </a>
       </div>
     </div>
-    <div class="appointment-block__steps">
-      <form class="appointment-block" action="/appointment-success/" method="post" v-show="activeStep===0">
+    <form class="appointment-block__steps">
+      <div class="appointment-block" v-show="activeStep===0">
         <div class="container">
           <div class="appointment-block__items">
             <div class="appointment-block__item appointment-block__item--service" v-on:click="activeStep=1">
@@ -97,19 +97,9 @@
             <button type="submit" class="btn btn-cyan">Записаться</button>
           </div>
         </div>
-      </form>
+      </div>
       <div class="appointment-block" v-show="activeStep===1">
         <div class="container">
-          <div class="searchbox">
-            <div class="input input-search input-icon">
-              <div class="input-icon__wrap"><span class="icon">
-                  <svg width="20" height="20">
-                    <use xlink:href="/img/sprites/sprite.svg#icon_search"></use>
-                  </svg></span>
-                <input type="search" placeholder="Найти врача или услугу">
-              </div>
-            </div>
-          </div>
           <div class="appointment-block__directions" v-if="!doctorChosen.length">
             <div class="appointment-block__direction" v-for="(item, i) in services" :key="i">
               <label>{{ item.name }}
@@ -118,7 +108,7 @@
               </label>
             </div>
           </div>
-          <div class="appointment-block__directions" v-if="doctorChosen.length">
+          <div class="appointment-block__directions" v-else>
             <div class="appointment-block__direction" v-for="(item, i) in filteredServices" :key="i">
               <label>{{ item.name }}
                 <input type="radio" v-bind:value="item.name" v-model="serviceSelected" v-on:click="activeStep=2"
@@ -189,7 +179,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </form>
   </div>
 </template>
 
@@ -379,6 +369,7 @@ export default {
       },
       time: [],
       dateTimeChosen: [],
+      searchQuery: ''
     }
   },
   methods: {

@@ -7,7 +7,7 @@
         </svg></a></div>
       <div class="popup-content">
         <div class="popup-content__title">Фильтр</div>
-        <form class="popup-filter-form">
+        <div class="popup-filter-form">
           <div class="popup-filters__section">
             <div class="title">Направления</div>
             <div class="popup-filters__directions">
@@ -29,9 +29,9 @@
             </div>
           </div>
           <div class="popup-filters__submit">
-            <button class="btn btn-cyan" type="submit">Подобрать врача</button>
+            <a href="#close" class="btn btn-cyan" type="submit">Подобрать врача</a>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   </div>

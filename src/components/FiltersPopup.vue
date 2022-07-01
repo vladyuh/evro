@@ -59,7 +59,7 @@ export default {
       this.$emit('onSort',{
         sortChosen: this.sortChosen
       })
-    }
+    },
   }
 }
 </script>

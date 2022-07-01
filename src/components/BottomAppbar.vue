@@ -1,11 +1,11 @@
 <template>
   <div class="bottom-bar">
     <div class="container">
-      <a class="bottom-bar__item" v-bind:href="item.link" v-for="(item, i) in this.bottom_items" :key="i" v-bind:class="{'center': item.isCenter, 'is-active': item.isActive}">
+      <router-link class="bottom-bar__item" v-for="(item, i) in this.bottom_items" :key="i" v-bind:class="{'center': item.isCenter, 'is-active': item.isActive}" v-bind:to="item.link">
         <div class="icon" v-html="item.icon">
         </div>
         <div class="caption">{{item.name}}</div>
-      </a>
+      </router-link>
     </div>
   </div>
 </template>

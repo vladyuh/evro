@@ -44,7 +44,8 @@
         </div>
       </div>
     </div>
-    <FiltersPopup :directions="direct" :sortBy="sort" @onChange="changeFilter($event)" @onSort="changeSort($event)"></FiltersPopup>
+    <FiltersPopup :directions="direct" :sortBy="sort" @onChange="changeFilter($event)"
+                  @onSort="changeSort($event)"></FiltersPopup>
     <BottomAppbar :bottom_items="menuItems"></BottomAppbar>
   </div>
 </template>
@@ -167,10 +168,11 @@ export default {
           dir: "hiru"
         }
       ],
-      direct: [{
-        name: "Дермотология",
-        value: "derm",
-      },
+      direct: [
+        {
+          name: "Дермотология",
+          value: "derm",
+        },
         {
           name: "Гастроэнтерология",
           value: "gast",
@@ -267,7 +269,7 @@ export default {
         }
       ],
       selectedDir: [],
-      selectedSort: ''
+      selectedSort: "dir",
     }
   },
   methods: {
@@ -277,38 +279,40 @@ export default {
     },
     changeSort: function (event) {
       this.selectedSort = event.sortChosen;
-      this.sortDocs()
-    },
-    sortDocs: function (){
-      let docs = this.filterDocs();
-        let sortedDocs = docs.sort((a,b)=>{
-          if(this.selectedSort==="alph"){
-            return a.name.localeCompare(b.name)
-          }
-          else if(this.selectedSort==="dir"){
-            return a.dir.localeCompare(b.dir)
-          }
-          else {
-            return false
-          }
-        })
-        console.log(sortedDocs)
-        return sortedDocs
     },
     filterDocs: function () {
       let newDocs = this.alldocs.filter((item) => {
-        if(this.selectedDir.indexOf(item.dir)!==-1){
+        if (this.selectedDir.indexOf(item.dir) !== -1) {
           return true
         }
       })
-      if(newDocs.length){
-        return newDocs
-      }
-      else{
+      if (newDocs.length) {
+        if(this.selectedSort){
+          newDocs.sort((a,b) => {
+            if(this.selectedSort === "apha"){
+              if (a.name > b.name) {
+                return 1;
+              }
+              if (a.name < b.name) {
+                return -1;
+              }
+            }
+            if(this.selectedSort === "dir"){
+              if (a.dir > b.dir) {
+                return 1;
+              }
+              if (a.dir < b.dir) {
+                return -1;
+              }
+            }
+          })
+          return newDocs
+        }
+      } else {
         return this.alldocs
       }
 
-    }
+    },
   },
   watch: {
     searchQuery: function () {
@@ -316,8 +320,7 @@ export default {
     checked: function () {
     }
   },
-  computed: {
-  }
+  computed: {}
 }
 </script>
 

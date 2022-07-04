@@ -172,39 +172,39 @@ export default {
       direct: [
         {
           name: "Дермотология",
-          value: "derm",
+          value: "Дермотология",
         },
         {
           name: "Гастроэнтерология",
-          value: "gast",
+          value: "Гастроэнтерология",
         },
         {
           name: "Оториноларингология",
-          value: "otor",
+          value: "Оториноларингология",
         },
         {
           name: "Онкология",
-          value: "onko",
+          value: "Онкология",
         },
         {
           name: "Терапия",
-          value: "ther",
+          value: "Терапия",
         },
         {
           name: "Ортопедия",
-          value: "orto",
+          value: "Ортопедия",
         },
         {
           name: "Гинекология",
-          value: "gine",
+          value: "Гинекология",
         },
         {
           name: "Урология",
-          value: "yrol",
+          value: "Урология",
         },
         {
           name: "Хирургия",
-          value: "hiru",
+          value: "Хирургия",
         },
       ],
       sort: [

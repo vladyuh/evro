@@ -101,7 +101,7 @@ export default {
           link: "Записаться на прием",
           image: "/img/common/dc-1.jpg",
           withLink: "#",
-          dir: "derm",
+          dir: "Дерматология",
         },
         {
           name: "Подольская Елена Олеговна",
@@ -109,7 +109,7 @@ export default {
           link: "Записаться на прием",
           image: "/img/common/dc-2.jpg",
           withLink: "#",
-          dir: "gast"
+          dir: "Гастроэнтерология"
         },
         {
           name: "Смертин Николай Владимирович",
@@ -117,7 +117,7 @@ export default {
           link: "Записаться на прием",
           image: "/img/common/dc-3.jpg",
           withLink: "#",
-          dir: "otor"
+          dir: "Оториноларингология"
         },
         {
           name: "Зингалев Сергей Олегович",
@@ -125,7 +125,7 @@ export default {
           link: "Записаться на прием",
           image: "/img/common/dc-4.jpg",
           withLink: "#",
-          dir: "onko"
+          dir: "Онкология"
         },
         {
           name: "Козакова Оксана Григорьевна",
@@ -133,7 +133,7 @@ export default {
           link: "Записаться на прием",
           image: "/img/common/dc-5.jpg",
           withLink: "#",
-          dir: "ther"
+          dir: "Терапия"
         },
         {
           name: "Бабров Артем Александрович",
@@ -141,7 +141,7 @@ export default {
           link: "Записаться на прием",
           image: "/img/common/dc-7.jpg",
           withLink: "#",
-          dir: "orto"
+          dir: "Травматология"
         },
         {
           name: "Басенко Татьяна Валерьевна",
@@ -149,7 +149,7 @@ export default {
           link: "Записаться на прием",
           image: "/img/common/dc-8.jpg",
           withLink: "#",
-          dir: "gine"
+          dir: "Гинекология"
         },
         {
           name: "Багрицевич Николай Викторович",
@@ -157,7 +157,7 @@ export default {
           link: "Записаться на прием",
           image: "/img/common/dc-9.jpg",
           withLink: "#",
-          dir: "yrol",
+          dir: "Урология",
           display: true,
         },
         {
@@ -166,7 +166,7 @@ export default {
           link: "Записаться на прием",
           image: "/img/common/dc-10.jpg",
           withLink: "/doctors/doctor/",
-          dir: "hiru"
+          dir: "Хирургия"
         }
       ],
       direct: [

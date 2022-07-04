@@ -3,15 +3,26 @@
     <div class="top-bar">
       <div class="container">
         <div class="top-bar__back" v-show="activeStep!==0" v-on:click="activeStep=moveBack(activeStep)">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 28 28" id="icon_chevron_left_small_border"><path d="M16 18l-4-4 4-4" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 1h12v-2H8v2zm19 7v12h2V8h-2zm-7 19H8v2h12v-2zM1 20V8h-2v12h2zm7 7a7 7 0 01-7-7h-2a9 9 0 009 9v-2zm19-7a7 7 0 01-7 7v2a9 9 0 009-9h-2zM20 1a7 7 0 017 7h2a9 9 0 00-9-9v2zM8-1a9 9 0 00-9 9h2a7 7 0 017-7v-2z" fill="#fff"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 28 28" id="icon_chevron_left_small_border">
+            <path d="M16 18l-4-4 4-4" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"/>
+            <path
+                d="M8 1h12v-2H8v2zm19 7v12h2V8h-2zm-7 19H8v2h12v-2zM1 20V8h-2v12h2zm7 7a7 7 0 01-7-7h-2a9 9 0 009 9v-2zm19-7a7 7 0 01-7 7v2a9 9 0 009-9h-2zM20 1a7 7 0 017 7h2a9 9 0 00-9-9v2zM8-1a9 9 0 00-9 9h2a7 7 0 017-7v-2z"
+                fill="#fff"/>
+          </svg>
         </div>
         <div class="top-bar__title">{{ showTitle(activeStep) }}</div>
-        <a href="/" class="top-bar__close">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 28 28" id="icon_x_small_border"><path d="M18 10l-8 8M10 10l8 8" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 1h12v-2H8v2zm19 7v12h2V8h-2zm-7 19H8v2h12v-2zM1 20V8h-2v12h2zm7 7a7 7 0 01-7-7h-2a9 9 0 009 9v-2zm19-7a7 7 0 01-7 7v2a9 9 0 009-9h-2zM20 1a7 7 0 017 7h2a9 9 0 00-9-9v2zM8-1a9 9 0 00-9 9h2a7 7 0 017-7v-2z" fill="#fff"/></svg>
-        </a>
+        <router-link to="/" class="top-bar__close">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 28 28" id="icon_x_small_border">
+            <path d="M18 10l-8 8M10 10l8 8" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"/>
+            <path
+                d="M8 1h12v-2H8v2zm19 7v12h2V8h-2zm-7 19H8v2h12v-2zM1 20V8h-2v12h2zm7 7a7 7 0 01-7-7h-2a9 9 0 009 9v-2zm19-7a7 7 0 01-7 7v2a9 9 0 009-9h-2zM20 1a7 7 0 017 7h2a9 9 0 00-9-9v2zM8-1a9 9 0 00-9 9h2a7 7 0 017-7v-2z"
+                fill="#fff"/>
+          </svg>
+        </router-link>
       </div>
     </div>
     <form class="appointment-block__steps">
+
       <div class="appointment-block" v-show="activeStep===0">
         <div class="container">
           <div class="appointment-block__items">
@@ -19,8 +30,10 @@
               <div class="icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M8 6H21" stroke="#0088CC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M8 12H21" stroke="#0088CC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M8 18H21" stroke="#0088CC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M8 12H21" stroke="#0088CC" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round"/>
+                  <path d="M8 18H21" stroke="#0088CC" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round"/>
                   <path d="M3 6H3.01" stroke="#0088CC" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round"/>
                   <path d="M3 12H3.01" stroke="#0088CC" stroke-width="2" stroke-linecap="round"
@@ -69,7 +82,8 @@
                       stroke="#0088CC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                   <path d="M16 2V6" stroke="#0088CC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                   <path d="M8 2V6" stroke="#0088CC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M3 10H21" stroke="#0088CC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M3 10H21" stroke="#0088CC" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round"/>
                 </svg>
               </div>
               <div class="caption" v-show="!dateTimeChosen.length">Выбрать дату и время</div>
@@ -82,7 +96,8 @@
           <div class="appointment-block__info" v-if="serviceChosen.length!==0 && dateTimeChosen.length!==0">
             <div class="title">Важная информация</div>
             <div class="block">
-              <div class="block-text" v-if="serviceChosen.length!==0">{{getServiceItemSelected(serviceChosen,'desc')}}
+              <div class="block-text" v-if="serviceChosen.length!==0">
+                {{ getServiceItemSelected(serviceChosen, 'desc') }}
               </div>
               <div class="block-address">
                 <div class="block-address__caption">Адрес «Евромедики»</div>
@@ -93,15 +108,29 @@
           </div>
           <div class="appointment-block__submit" v-if="serviceChosen.length!==0 && dateTimeChosen.length!==0">
             <div class="caption">Стоимость услуги</div>
-            <div class="price">от {{getServiceItemSelected(serviceChosen,'price')}} рублей</div>
+            <div class="price">от {{ getServiceItemSelected(serviceChosen, 'price') }} рублей</div>
             <button type="submit" class="btn btn-cyan">Записаться</button>
           </div>
         </div>
       </div>
+
+
       <div class="appointment-block" v-show="activeStep===1">
         <div class="container">
+          <div class="searchbox">
+            <div class="input input-search input-icon">
+              <div class="input-icon__wrap">
+                  <span class="icon">
+                    <svg width="20" height="20">
+                      <use xlink:href="/img/sprites/sprite.svg#icon_search"></use>
+                    </svg>
+                  </span>
+                <input type="search" v-model="searchQuery" placeholder="Найти услугу">
+              </div>
+            </div>
+          </div>
           <div class="appointment-block__directions" v-if="!doctorChosen.length">
-            <div class="appointment-block__direction" v-for="(item, i) in services" :key="i">
+            <div class="appointment-block__direction" v-for="(item, i) in search(services)" :key="i">
               <label>{{ item.name }}
                 <input type="radio" v-bind:value="item.name" v-model="serviceSelected" v-on:click="activeStep=2"
                        name="direction"/>
@@ -109,7 +138,7 @@
             </div>
           </div>
           <div class="appointment-block__directions" v-else>
-            <div class="appointment-block__direction" v-for="(item, i) in filteredServices" :key="i">
+            <div class="appointment-block__direction" v-for="(item, i) in search(filteredServices)" :key="i">
               <label>{{ item.name }}
                 <input type="radio" v-bind:value="item.name" v-model="serviceSelected" v-on:click="activeStep=2"
                        name="direction"/>
@@ -118,8 +147,22 @@
           </div>
         </div>
       </div>
+
+
       <div class="appointment-block" v-show="activeStep===2">
         <div class="container">
+          <div class="searchbox">
+            <div class="input input-search input-icon">
+              <div class="input-icon__wrap">
+                  <span class="icon">
+                    <svg width="20" height="20">
+                      <use xlink:href="/img/sprites/sprite.svg#icon_search"></use>
+                    </svg>
+                  </span>
+                <input type="search" v-model="searchQuer" placeholder="Найти услугу">
+              </div>
+            </div>
+          </div>
           <div class="appointment-block__services">
             <div class="appointment-block__service" v-for="item in getServiceItems(serviceSelected)" :key="item.name">
               <label>{{ item.name }}
@@ -130,6 +173,8 @@
           </div>
         </div>
       </div>
+
+
       <div class="appointment-block" v-show="activeStep===3">
         <div class="container">
           <div class="appointment-block__doctors doctors-block__items" v-if="serviceSelected.length">
@@ -140,7 +185,8 @@
                 <input type="radio" name="doctor" v-bind:value="item.name" v-model="doctorChosen"
                        v-on:click="activeStep=0"/>
               </label>
-              <div class="image"><img class="lazyload" loading="lazy" v-bind:src="item.image" width="80" height="104"/>
+              <div class="image"><img class="lazyload" loading="lazy" v-bind:src="item.image" width="80"
+                                      height="104"/>
               </div>
             </div>
           </div>
@@ -152,12 +198,15 @@
                 <input type="radio" name="doctor" v-bind:value="item.name" v-model="doctorChosen"
                        v-on:click="activeStep=0"/>
               </label>
-              <div class="image"><img class="lazyload" loading="lazy" v-bind:src="item.image" width="80" height="104"/>
+              <div class="image"><img class="lazyload" loading="lazy" v-bind:src="item.image" width="80"
+                                      height="104"/>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+
       <div class="appointment-block" v-show="activeStep===4">
         <div class="container">
           <div class="appointment-block__date">
@@ -179,6 +228,7 @@
           </div>
         </div>
       </div>
+
     </form>
   </div>
 </template>
@@ -369,7 +419,8 @@ export default {
       },
       time: [],
       dateTimeChosen: [],
-      searchQuery: ''
+      searchQuery: '',
+      searchQuer: ''
     }
   },
   methods: {
@@ -387,9 +438,9 @@ export default {
         return result.id
       }
     },
-    getServiceItemSelected: function (id,key){
+    getServiceItemSelected: function (id, key) {
       let serviceItems = this.getServiceItems(this.serviceSelected);
-      let selected = serviceItems.find(function (item){
+      let selected = serviceItems.find(function (item) {
         return item.name === id
       })
       return selected[key]
@@ -399,8 +450,21 @@ export default {
         let result = this.services.find(function (item) {
           return item.name === id
         })
-        return result.items
+
+        let allServices = result.items;
+
+        if (this.searchQuer) {
+          allServices = allServices.filter((item) => {
+            if (item.name.toLowerCase().indexOf(this.searchQuer.toLowerCase()) !== -1) {
+              return true
+            }
+          })
+        }
+
+        return allServices;
       }
+
+
     },
     getDoctor: function (id, key) {
       if (this.doctorChosen.length) {
@@ -433,7 +497,22 @@ export default {
       this.calendarConfigs.enabledDates = []
       this.calendarConfigs.markedDates = []
       this.calendarData.selectedDate = ""
-    }
+    },
+    search: function (services) {
+
+      let allServices = services;
+
+      if (this.searchQuery) {
+        allServices = allServices.filter((item) => {
+          if (item.name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) !== -1) {
+            return true
+          }
+        })
+      }
+
+      return allServices;
+
+    },
   },
   watch: {
     serviceSelected: function () {

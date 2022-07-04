@@ -43,9 +43,14 @@ export default {
   mounted() {
     new Splide(".banner-block__slider", {
       type: "carousel",
-      perPage: 1,
+      perPage: 2,
       gap: 16,
       arrows: false,
+      breakpoints: {
+        1023: {
+          perPage: 1,
+        }
+      }
     }).mount();
   }
 }

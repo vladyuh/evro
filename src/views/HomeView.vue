@@ -6,10 +6,10 @@
       <div class="container">
         <div class="block-title doctors-block__title">
           <span>Любимые врачи</span>
-          <a href="#" class="block-title__link">
+          <router-link to="/doctors/" class="block-title__link">
             <span>Все</span>
             <svg width="24" height="24"><use xlink:href="/img/sprites/sprite.svg#icon_chevron_right"></use></svg>
-          </a>
+          </router-link>
         </div>
         <FavoriteDoctors :doctors="doctors"></FavoriteDoctors>
       </div>
@@ -18,11 +18,11 @@
       <div class="container">
         <div class="block-title visits-block__title">
           <span>План визитов</span>
-          <a class="block-title__link" href="#"><span>Все</span>
+          <router-link class="block-title__link" to="/visits/"><span>Все</span>
             <svg width="24" height="24">
               <use xlink:href="/img/sprites/sprite.svg#icon_chevron_right"></use>
             </svg>
-          </a>
+          </router-link>
         </div>
         <VisitsBlock :visits="visits"></VisitsBlock>
       </div>
@@ -50,12 +50,12 @@
       <div class="container">
         <div class="block-title analyzes-block__title">
           <span>Новые анализы</span>
-          <a class="block-title__link" href="#">
+          <router-link class="block-title__link" to="/analyzes/">
             <span>Все</span>
             <svg width="24" height="24">
               <use xlink:href="/img/sprites/sprite.svg#icon_chevron_right"></use>
             </svg>
-          </a>
+          </router-link>
         </div>
         <AnalyzesBlock :analyzes="analyzes"></AnalyzesBlock>
       </div>
@@ -94,19 +94,23 @@ export default {
           name: "Чудовский Олег Анатольевич",
           job: "Врач-реабилитолог",
           link: "Записаться на прием",
-          image: "/img/common/doc-1.jpg"
+          image: "/img/common/doc-1.jpg",
+          withLink: "#"
         },
         {
           name: "Козакова Оксана Григорьевна",
           job: "Терапевт",
           link: "Записаться на прием",
-          image: "/img/common/doc-2.jpg"
+          image: "/img/common/doc-2.jpg",
+          withLink: "#"
+
         },
         {
           name: "Козакова Оксана Григорьевна",
           job: "Терапевт",
           link: "Записаться на прием",
-          image: "/img/common/doc-3.jpg"
+          image: "/img/common/doc-3.jpg",
+          withLink: "#"
         },
       ],
       visits: [
@@ -151,14 +155,16 @@ export default {
       ],
       analyzes: [
         {
+          link: "#",
           date: "14 апреля",
           title: "Клинический анализ крови",
           ready: "Готов 18 апреля"
         },
         {
+          link: "#",
           date: "13 апреля",
           title: "Определение уровня АЛТ в крови",
-          ready: "Готов 17 апреля"
+          ready: "Готов 17 апреля",
         },
       ],
       menuItems: [

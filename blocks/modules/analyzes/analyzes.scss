@@ -3,6 +3,11 @@
   &__items{
     display: flex;
     flex-wrap: wrap;
+
+    @media screen and (min-width: 1024px) {
+      margin: 0 -6px;
+    }
+
   }
   &__item{
     width: 100%;
@@ -11,6 +16,11 @@
     padding: 16px;
     margin-bottom: 12px;
     position: relative;
+
+    @media screen and (min-width: 1024px) {
+      margin: 0 6px 12px;
+      width: calc(100% / 2 - 12px);
+    }
 
     &.with-dot::after{
       content: "";
@@ -21,10 +31,6 @@
       top: 8px;
       background: #21A321;
       border-radius: 4px;
-    }
-
-    &:last-child{
-      margin-bottom: 0px;
     }
 
     .date{

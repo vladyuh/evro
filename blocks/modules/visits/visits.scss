@@ -3,6 +3,11 @@
   &__items{
     display: flex;
     flex-wrap: wrap;
+
+    @media screen and (min-width: 1024px){
+      margin: 0 -6px;
+    }
+
   }
   &__item{
     width: 100%;
@@ -13,6 +18,12 @@
     align-items: center;
     margin-bottom: 12px;
     position: relative;
+    align-self: stretch;
+
+    @media screen and (min-width: 1024px) {
+      margin: 0 6px 12px;
+      width: calc(100% / 2 - 12px);
+    }
 
     &::after{
       content: "";
@@ -23,10 +34,6 @@
       top: 8px;
       background: #EB8D2F;
       border-radius: 4px;
-    }
-
-    &:last-child{
-      margin-bottom: 0px;
     }
 
     .image{

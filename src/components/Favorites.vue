@@ -2,22 +2,14 @@
   <div class="doctors-block__items">
         <div class="doctors-block__item" v-for="(item, i) in this.doctors" :key="i" v-bind:class="{'doctors-block__item--directions': item.text || item.features}">
           <div class="text">
-            <a class="text-name" v-bind:href="item.withLink">{{item.name}}</a>
+            <router-link class="text-name" v-bind:to="item.withLink">{{item.name}}</router-link>
             <div class="text-caption">{{item.job}}</div>
             <a class="text-link" href="#">{{item.link}}</a>
-            <div class="text-toggle" v-if="item.text" @click="toggle($event)"></div>
+            <a href="#view" class="text-toggle" v-if="item.text" @click="toggle(item.name)"></a>
           </div>
           <div class="image">
             <img class="lazyload" loading="lazy" v-bind:src="item.image" width="80"
                                   height="104"/>
-          </div>
-          <div class="features" v-show="item.text || item.features">
-            <div class="features-text" v-html="item.text">
-            </div>
-            <ul class="features-list">
-              <li v-for="(li,i) in item.features" :key="i">{{li}}</li>
-            </ul>
-            <a class="features-link" href="#">{{item.link}}</a>
           </div>
         </div>
       </div>
@@ -30,13 +22,15 @@ export default {
   props: ['doctors'],
   data: function () {
     return {
+      doctorName: '',
     }
   },
   methods: {
-    toggle: function (event){
-      let text = event.target.parentElement;
-      let item = text.parentElement;
-      item.classList.toggle('is-active');
+    toggle: function (name){
+      this.doctorName = name
+      this.$emit('onClick', {
+        doctorClicked: this.doctorName
+      })
     }
   },
   mounted() {

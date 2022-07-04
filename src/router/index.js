@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import LoginView from "@/views/LoginView";
+import CodeView from "@/views/CodeView";
+import RegisterView from "@/views/RegisterView";
 
 Vue.use(VueRouter)
 
@@ -11,32 +14,47 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/services',
+    path: '/login/',
+    name: 'login',
+    component: LoginView
+  },
+  {
+    path: '/code/',
+    name: 'code',
+    component: CodeView
+  },
+  {
+    path: '/register/',
+    name: 'register',
+    component: RegisterView
+  },
+  {
+    path: '/services/',
     name: 'services',
     component: () => import(/* webpackChunkName: "about" */ '../views/ServicesView.vue')
   },
   {
-    path: '/services/service',
+    path: '/services/service/',
     name: 'service',
     component: () => import(/* webpackChunkName: "about" */ '../views/ServicesDetailView.vue')
   },
   {
-    path: '/analyzes',
+    path: '/analyzes/',
     name: 'analyzes',
     component: () => import(/* webpackChunkName: "about" */ '../views/AnalyzesView.vue')
   },
   {
-    path: '/analyzes/view',
+    path: '/analyzes/view/',
     name: 'analyzes-view',
     component: () => import(/* webpackChunkName: "about" */ '../views/AnalyzesViewView.vue')
   },
   {
-    path: '/analyzes/appointment',
+    path: '/analyzes/appointment/',
     name: 'analyzes-appointment',
     component: () => import(/* webpackChunkName: "about" */ '../views/AnalyzesAppointmentView.vue')
   },
   {
-    path: '/visits',
+    path: '/visits/',
     name: 'visits',
     component: () => import(/* webpackChunkName: "about" */ '../views/VisitsView.vue')
   },
@@ -51,22 +69,22 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/VisitsHistoryView.vue')
   },
   {
-    path: '/doctors',
+    path: '/doctors/',
     name: 'doctors',
     component: () => import(/* webpackChunkName: "about" */ '../views/DoctorsView.vue')
   },
   {
-    path: '/doctors/doctor',
+    path: '/doctors/doctor/',
     name: 'doctor',
     component: () => import(/* webpackChunkName: "about" */ '../views/DoctorView.vue')
   },
   {
-    path: '/appointment',
+    path: '/appointment/',
     name: 'appointment',
     component: () => import(/* webpackChunkName: "about" */ '../views/AppointmentView.vue')
   },
   {
-    path: '/appointment-success',
+    path: '/appointment-success/',
     name: 'appointment-success',
     component: () => import(/* webpackChunkName: "about" */ '../views/AppointmentDoneView.vue')
   }

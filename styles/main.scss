@@ -7,6 +7,10 @@
 @import "../blocks/components/components";
 @import "../blocks/modules/modules";
 
+.splide__sr{
+  display: none !important;
+}
+
 #app{
   display: flex;
   flex-direction: column;

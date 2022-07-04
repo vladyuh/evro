@@ -16,8 +16,7 @@
     </div>
     <div class="services-sections">
       <div class="container">
-        <ServicesSection :title="diagTitle" :services="filterDiag()"></ServicesSection>
-        <ServicesSection :title="cureTitle" :services="filterCure()"></ServicesSection>
+        <ServicesSection v-for="(service,i) in services" :key="i" :title="service.title" :services="filterServices(service.subitems)"></ServicesSection>
       </div>
     </div>
     <BottomAppbar :bottom_items="menuItems"></BottomAppbar>
@@ -42,81 +41,87 @@ export default {
   data: function () {
     return {
       pageTitle: "Услуги",
-      diagTitle: "Диагностика",
-      diagItems: [
+      services: [
         {
-          name: "Ортопантомограмма",
-          link: "#",
-        },
-        {
-          name: "Ультразвуковая диагностика",
-          link: "#",
-        },
-        {
-          name: "Функциональная диагностика",
-          link: "#",
-        },
-        {
-          name: "Эндоскопия",
-          link: "#",
-        }
-      ],
-      cureTitle: "Лечение",
-      cureItems: [
-        {
-          name: "Гастроэнтерология",
-          link: "#",
-        },
-        {
-          name: "Гинекология",
-          link: "#",
-        },
-        {
-          name: "Дерматология",
-          link: "#",
-          items: [{
-            name: "Дерматология 1",
-            link: "#"
-          }],
-        },
-        {
-          name: "Малоинвазивная хирургия",
-          link: "#",
-        },
-        {
-          name: "Ортопедия и травматология",
-          link: "/services/service/",
-        },
-        {
-          name: "Оториноларингология",
-          link: "#",
-          items: [
+          title: "Диагностика",
+          subitems: [
             {
-              name: "Первичный прием врачом-оториноларингологом",
-              link: "#"
+              name: "Ортопантомограмма",
+              link: "#",
             },
             {
-              name: "Повторный прием врачом-оториноларингологом",
-              link: "#"
+              name: "Ультразвуковая диагностика",
+              link: "#",
+            },
+            {
+              name: "Функциональная диагностика",
+              link: "#",
+            },
+            {
+              name: "Эндоскопия",
+              link: "#",
             }
           ],
         },
         {
-          name: "Терапия",
-          link: "#",
-        },
-        {
-          name: "Тракционная терапия",
-          link: "#",
-        },
-        {
-          name: "Урология",
-          link: "#",
-        },
-        {
-          name: "Хирургия",
-          link: "#",
-        },
+          title: "Лечение",
+          subitems: [
+            {
+              name: "Гастроэнтерология",
+              link: "#",
+            },
+            {
+              name: "Гинекология",
+              link: "#",
+            },
+            {
+              name: "Дерматология",
+              link: "#",
+              items: [{
+                name: "Дерматология 1",
+                link: "#"
+              }],
+            },
+            {
+              name: "Малоинвазивная хирургия",
+              link: "#",
+            },
+            {
+              name: "Ортопедия и травматология",
+              link: "/services/service/",
+            },
+            {
+              name: "Оториноларингология",
+              link: "#",
+              items: [
+                {
+                  name: "Первичный прием врачом-оториноларингологом",
+                  link: "#"
+                },
+                {
+                  name: "Повторный прием врачом-оториноларингологом",
+                  link: "#"
+                }
+              ],
+            },
+            {
+              name: "Терапия",
+              link: "#",
+            },
+            {
+              name: "Тракционная терапия",
+              link: "#",
+            },
+            {
+              name: "Урология",
+              link: "#",
+            },
+            {
+              name: "Хирургия",
+              link: "#",
+            },
+          ],
+        }
       ],
       menuItems: [
         {
@@ -174,43 +179,19 @@ export default {
     }
   },
   methods: {
-    filterDiag: function (){
-
-      let allDiag = this.diagItems;
-
-      if(this.searchQuery){
-        allDiag = allDiag.filter((item) => {
-          if (item.name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) !== -1) {
-            return true
-          }
-
-        })
-      }
-
-      return allDiag;
-
-    },
-    filterCure: function (){
-      let allCure = this.cureItems;
-
-      if(this.searchQuery){
+    filterServices: function (subitems) {
+      let allCure = subitems;
+      if (this.searchQuery) {
         allCure = allCure.filter((item) => {
           if (item.name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) !== -1) {
             return true
           }
-
         })
       }
-
       return allCure;
 
     }
   },
-  watch: {
-    searchQuery: function (){
-      console.log(this.searchQuery)
-    }
-  }
 }
 </script>
 

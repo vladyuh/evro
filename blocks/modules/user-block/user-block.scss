@@ -62,6 +62,19 @@
     justify-content: center;
     width: 40px;
     height: 40px;
+    transition: all 0.25s ease;
+
+    &:hover{
+      background: #08c;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+
+      svg{
+        fill: #fff;
+        stroke: #fff;
+      }
+
+    }
+
   }
 
 }

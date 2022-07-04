@@ -2,11 +2,11 @@
   <div class="analyzes-page analyzes-page--detail">
     <div class="top-bar">
       <div class="container">
-        <a class="top-bar__back" href="/analyzes">
+        <router-link class="top-bar__back" to="/analyzes">
           <svg width="28" height="28">
             <use xlink:href="/img/sprites/sprite.svg#icon_chevron_left_small_border"></use>
           </svg>
-        </a>
+        </router-link>
         <div class="top-bar__title">{{ pageTitle }}</div>
       </div>
     </div>

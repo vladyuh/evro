@@ -12,6 +12,7 @@
     flex-direction: column;
     flex-grow: 1;
     transition: all 0.25s ease;
+    max-width: 480px;
   }
 
   &__logo{
@@ -67,6 +68,10 @@
 
 .register-block{
   padding: 56px 0;
+
+  .container{
+    max-width: 480px;
+  }
 
   .form__field{
     &.photo{

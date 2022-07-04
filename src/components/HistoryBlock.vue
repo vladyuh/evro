@@ -1,9 +1,9 @@
 <template>
   <div class="history-block__items">
-    <a class="history-block__item" v-for="(item, i) in this.history" :key="i" v-bind:href="item.link">
+    <router-link class="history-block__item" v-for="(item, i) in this.history" :key="i" v-bind:to="item.link">
       <div class="date">{{item.date}}</div>
       <div class="title">{{item.name}}</div>
-    </a>
+    </router-link>
   </div>
 </template>
 

@@ -1,10 +1,12 @@
 <template>
   <div class="services-page services-detail">
     <div class="top-bar">
-      <div class="container"><a class="top-bar__back" href="/services/">
-        <svg width="28" height="28">
-          <use xlink:href="/img/sprites/sprite.svg#icon_chevron_left_small_border"></use>
-        </svg></a>
+      <div class="container">
+        <router-link class="top-bar__back" to="/services/">
+          <svg width="28" height="28">
+            <use xlink:href="/img/sprites/sprite.svg#icon_chevron_left_small_border"></use>
+          </svg>
+        </router-link>
         <div class="top-bar__title">{{pageTitle}}</div>
       </div>
     </div>
@@ -27,7 +29,34 @@
     <div class="doctors-block doctors-block--directions">
       <div class="container">
         <div class="block-title doctors-block__title"><span>Врачи по направлению</span></div>
-        <FavoriteDoctors :doctors="docs"></FavoriteDoctors>
+        <FavoriteDoctors :doctors="docs" @onClick="onDocClicked($event)"></FavoriteDoctors>
+      </div>
+    </div>
+    <div class="popup__wrp" id="view">
+      <div class="popup popup-docs">
+        <div class="popup-close"><a href="#close">
+          <svg width="24" height="24">
+            <use xlink:href="/img/sprites/sprite.svg#ic_close"></use>
+          </svg></a></div>
+        <div class="popup-content">
+          <div class="popup-content__title">О докторе</div>
+          <div class="text">
+            <div class="text-name">{{clickedDoc.name}}</div>
+            <div class="text-job">{{clickedDoc.job}}</div>
+          </div>
+          <div class="image">
+            <img class="lazyload" loading="lazy" v-bind:src="clickedDoc.image" width="80"
+                 height="104"/>
+          </div>
+          <div class="features" v-if="clickedDoc.text || clickedDoc.features">
+            <div class="features-text" v-html="clickedDoc.text">
+            </div>
+            <ul class="features-list">
+              <li v-for="(li,i) in clickedDoc.features" :key="i">{{li}}</li>
+            </ul>
+            <a class="features-link" v-bind:href="clickedDoc.withLink">{{clickedDoc.link}}</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -96,12 +125,13 @@ export default {
         },
         {
           name: "Чудовский Олег Анатольевич",
-          job: "Врач-реабилитолог (специализирующийся по реабилитации ортопедо-травматологических пациентов)",
+          job: "Врач-реабилитолог",
           image: "/img/common/doc-7.jpg",
           link: "Записаться на прием",
           withLink: "#"
         }
       ],
+      clickedDoc: []
     }
   },
   methods: {
@@ -110,8 +140,17 @@ export default {
       parent.querySelectorAll('.hidden').forEach(function (el){
         el.classList.toggle('visible')
       })
+    },
+    onDocClicked: function (event){
+      let name = event.doctorClicked;
+      let doc = this.docs.find((item) =>{
+        if(item.name.toLowerCase().includes(name.toLowerCase())){
+          return true
+        }
+      })
+      this.clickedDoc = doc
     }
-  }
+  },
 }
 </script>
 

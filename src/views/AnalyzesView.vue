@@ -25,7 +25,7 @@
           </div>
           <div class="tab-block__content" v-bind:class="{'is-active': currentTab===1}">
             <div class="analyzes-links">
-              <a class="analyzes-links__link" v-for="(link,i) in analyzesLinks" :key="i" v-bind:href="link.link">{{link.name}}</a>
+              <router-link class="analyzes-links__link" v-for="(link,i) in analyzesLinks" :key="i" v-bind:to="link.link">{{link.name}}</router-link>
             </div>
           </div>
         </div>
@@ -93,7 +93,7 @@ export default {
         },
         {
           name: "Гематологические исследования",
-          link: "/analyzes/appointment",
+          link: "/analyzes/appointment/",
         },
         {
           name: "Биохимические исследования",

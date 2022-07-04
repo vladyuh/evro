@@ -14,7 +14,7 @@
           26.05.22, 18:50
         </div>
         <div class="caption">С вами свяжется наш специалист для подтверждения записи!</div>
-        <a class="btn btn-cyan" href="/">Вернуться на главный экран</a>
+        <router-link class="btn btn-cyan" to="/">Вернуться на главный экран</router-link>
       </div>
     </div>
   </div>

@@ -4,18 +4,33 @@
 
 .appoint-page {
   padding: 16px 0 24px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+
+  .appoint{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
 
   &--success {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-
   }
 
   .appointment-block {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    .container{
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
   }
 
 }
@@ -37,12 +52,10 @@
 
   }
 
-  &__step {
-    display: none;
-
-    &:target {
-      display: block;
-    }
+  &__steps {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
   }
 
   &__item {
@@ -390,6 +403,7 @@
       line-height: 150%;
       text-align: center;
       text-decoration-line: underline;
+      text-underline-offset: 3px;
       color: #FFFFFF;
       margin-bottom: 24px;
     }
@@ -404,7 +418,9 @@
     }
 
     .btn {
-      margin-top: 24px;
+      max-width: 480px;
+      margin: 24px auto 0 auto;
+      width: 100%;
     }
   }
 

@@ -1,10 +1,11 @@
 <template>
   <div class="bottom-bar">
     <div class="container">
-      <router-link class="bottom-bar__item" v-for="(item, i) in this.bottom_items" :key="i" v-bind:class="{'center': item.isCenter, 'is-active': item.isActive}" v-bind:to="item.link">
+      <router-link class="bottom-bar__item" v-for="(item, i) in this.bottom_items" :key="i" v-bind:title="item.name"
+                   v-bind:class="{'center': item.isCenter, 'is-active': item.isActive}" v-bind:to="item.link">
         <div class="icon" v-html="item.icon">
         </div>
-        <div class="caption">{{item.name}}</div>
+        <div class="caption">{{ item.name }}</div>
       </router-link>
     </div>
   </div>
@@ -15,8 +16,9 @@
 export default {
   name: 'BottomAppbar',
   props: ['bottom_items'],
-  data: function (){
+  data: function () {
     return {
+      isActive: false,
     }
   },
 }

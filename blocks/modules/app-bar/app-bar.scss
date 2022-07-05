@@ -7,6 +7,8 @@
   padding: 8px 0;
   z-index: 2;
   filter: drop-shadow(0 0 9px rgba(0, 0, 0, 0.25));
+  padding-bottom: 8px;
+  padding-bottom: calc(8px + env(safe-area-inset-bottom));
 
   .container{
     display: flex;
@@ -104,8 +106,9 @@
     top: 0;
     right: auto;
     padding: 16px 0;
-    width: 80px;
     overflow-y: auto;
+    padding-left: 16px;
+    padding-left: calc(0px + env(safe-area-inset-left));
 
     .container{
       display: flex;

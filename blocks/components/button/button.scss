@@ -13,6 +13,9 @@ $radius: 80px;
   -ms-user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 
   svg{
     margin-right: 8px;

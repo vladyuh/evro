@@ -85,6 +85,18 @@ input[type="date"]{
   }
 }
 
+select{
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: $defaultPadding;
+  background-position: calc(100% - 12px) center;
+  background-image: url(/public/img/svg/ic_expand.svg);
+  background-repeat: no-repeat;
+  background-size: 24px;
+  transition: all 0.25s ease;
+}
+
 .select{
 
   &-hidden {

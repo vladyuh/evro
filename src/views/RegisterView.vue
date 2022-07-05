@@ -47,8 +47,15 @@
         </div>
         <div class="form__field">
           <div class="input input-tel"><span class="label">Ваш номер телефона</span>
-            <input type="tel" name="phone" placeholder="Найти врача или услугу" required="required"/>
+            <input type="tel" name="phone" placeholder="Найти врача или услугу" required="required" v-maska="'+7 (###) ###-##-##'"/>
           </div>
+        </div>
+        <div class="form__field confirm">
+          <label class="checkbox">
+            <input type="checkbox" name="directions" required checked>
+            <span class="checkbox__elem"></span>
+            <span class="checkbox__text">Согласен на обработку персональных данных</span>
+          </label>
         </div>
         <div class="form__field">
           <div class="login-block__back register-block__back">
@@ -69,10 +76,12 @@
 </template>
 
 <script>
+import { maska } from 'maska';
 
 export default {
   name: 'RegisterView',
   components: {},
+  directives: { maska },
   data: function () {
     return {}
   },

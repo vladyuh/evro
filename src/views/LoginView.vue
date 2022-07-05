@@ -5,7 +5,7 @@
       <form class="login-block__form" action="code.html">
         <div class="form__field">
           <div class="input input-tel"><span class="label">Ваш номер телефона</span>
-            <input type="tel" name="phone" placeholder="Найти врача или услугу" required="required"/>
+            <input type="tel" name="phone" placeholder="Найти врача или услугу" required="required"  v-maska="'+7 (###) ###-##-##'"/>
           </div>
         </div>
         <div class="form__submit">
@@ -26,9 +26,13 @@
 
 <script>
 
+
+import { maska } from 'maska';
+
 export default {
   name: 'LoginView',
   components: {},
+  directives: { maska },
   data: function () {
     return {}
   }

@@ -76,11 +76,11 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    background-image: url("/public/img/common/bg_smart.svg");
+    background-image: url("../img/common/bg_smart.svg");
     background-attachment: fixed;
 
     @media screen and (min-width: 576px) {
-        background-image: url("/public/img/common/bg_desktop.svg");
+        background-image: url("../img/common/bg_desktop.svg");
     }
 
 }

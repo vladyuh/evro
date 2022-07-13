@@ -2,7 +2,7 @@ const { defineConfig } = require('@vue/cli-service')
 
 module.exports = defineConfig({
   transpileDependencies: true,
-
+  filenameHashing: false,
   pwa: {
     name: 'Евромедика',
     themeColor: '#08c',

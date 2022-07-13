@@ -2,14 +2,15 @@
   <div class="login-block">
     <div class="container">
       <div class="login-block__logo"><img src="/img/common/logo.svg" width="188" height="68"></div>
-      <form class="login-block__form" action="code.html">
+      <form class="login-block__form" action="/code/">
         <div class="form__field">
-          <div class="input input-tel"><span class="label">Ваш номер телефона</span>
-            <input type="tel" name="phone" placeholder="Найти врача или услугу" required="required"  v-maska="'+7 (###) ###-##-##'"/>
+          <div class="input input-tel">
+            <span class="label">Ваш номер телефона</span>
+            <input type="tel" name="phone" v-model="phoneNumber" placeholder="Найти врача или услугу" required="required"  v-maska="'+7 (###) ###-##-##'"/>
           </div>
         </div>
         <div class="form__submit">
-          <button class="btn btn-cyan">Получить код по СМС</button>
+          <button class="btn btn-cyan" @click="submit($event)">Получить код по СМС</button>
         </div>
       </form>
       <div class="login-block__back">
@@ -34,7 +35,15 @@ export default {
   components: {},
   directives: { maska },
   data: function () {
-    return {}
+    return {
+      phoneNumber: null,
+    }
+  },
+  methods: {
+    submit: function (e){
+      e.preventDefault();
+      this.$router.push({path: '/code', query:{"phone": this.phoneNumber}})
+    }
   }
 }
 </script>

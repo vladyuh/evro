@@ -46,7 +46,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   background-repeat: no-repeat;
   background-size: 100%;
   background-position: center right;
-  background-image: url("/public/img/svg/icon_calendar.svg");
+  background-image: url("../img/svg/icon_calendar.svg");
   width: 24px;
   height: 24px;
 }
@@ -91,7 +91,7 @@ select{
   -moz-appearance: none;
   padding: $defaultPadding;
   background-position: calc(100% - 12px) center;
-  background-image: url(/public/img/svg/ic_expand.svg);
+  background-image: url(../img/svg/ic_expand.svg);
   background-repeat: no-repeat;
   background-size: 24px;
   transition: all 0.25s ease;
@@ -181,7 +181,7 @@ select{
       width: 24px;
       min-width: 24px;
       height:24px;
-      background-image: url(/public/img/svg/ic_expand.svg);
+      background-image: url(../img/svg/ic_expand.svg);
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center;

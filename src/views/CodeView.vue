@@ -4,7 +4,7 @@
       <div class="login-block__logo"><img src="/img/common/logo.svg" width="188" height="68"></div>
       <div class="login-block__desc">
         <div class="title">Код доступа</div>
-        <div class="text">На номер<span class="number">+375 (29) 444-**-**</span>было отправлено СМС с кодом доступа</div>
+        <div class="text">На номер <span class="number">{{number}}</span> было отправлено СМС с кодом доступа</div>
       </div>
       <form class="login-block__form" action="">
         <div class="form__field pincode">
@@ -12,10 +12,10 @@
           <input type="number">
           <input type="number">
           <input type="number">
-          <input type="hidden" name="pincode">
+          <input type="hidden" name="pincode" v-model="pin">
         </div>
         <div class="form__submit">
-          <button class="btn btn-transparent">Получить код по СМС</button>
+          <button class="btn btn-transparent" @click="getCode($event)">Получить код по СМС</button>
         </div>
       </form>
       <div class="login-block__back">
@@ -31,13 +31,34 @@
 
 <script>
 
+import axios from 'axios'
+
 export default {
   name: 'CodeView',
   components: {},
   data: function () {
-    return {}
+    return {
+      number: "",
+      code: "",
+      pin: "",
+      data: null,
+    }
   },
   methods: {
+    getCode: function (e){
+      e.preventDefault()
+      axios.get('/').then((response) => this.data = response.data.response)
+          .catch((error) => console.log(error.response.data));
+      let pincode = this.data.code;
+      if(pincode === this.pin){
+        this.$router.push({path: '/register', query:{"phone": this.number}})
+      }
+    }
+  },
+  created() {
+    if(this.$route.query.phone) {
+      this.number = this.$route.query.phone;
+    }
   },
   mounted() {
     let pincode = document.querySelectorAll(".pincode input");

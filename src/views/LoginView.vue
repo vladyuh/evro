@@ -49,6 +49,7 @@ export default {
   data: function () {
     return {
       errors: "",
+      token: "",
       form: {
         phone: "",
         birthDate: ""
@@ -70,7 +71,6 @@ export default {
             alert(error.response.status)
           }).finally(() => {
       });
-
 
     }
   }

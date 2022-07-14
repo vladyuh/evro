@@ -7,9 +7,22 @@
 </template>
 <script>
 
+
 window.onload = function () {
   document.querySelector("body").classList.remove("perf-no-animation");
 };
+
+
+export default {
+  data: function (){
+    return {
+      token: "23123123123fasfdasd"
+    }
+  },
+  created() {
+    localStorage.setItem('token', this.token)
+  },
+}
 
 </script>
 <style lang="scss">

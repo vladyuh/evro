@@ -95,7 +95,8 @@ const router = new VueRouter({
     return { x: 0, y: 0 };
   },
   routes,
-  mode: "history",
+  mode: 'history',
+  base: "/",
 })
 
 export default router

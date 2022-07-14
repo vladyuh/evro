@@ -16,6 +16,7 @@
     "v-calendar": "^2.4.1",
     "vue": "^2.6.14",
     "vue-functional-calendar": "^2.9.95",
+    "vue-pincode-input": "^0.4.0",
     "vue-router": "^3.5.1",
     "vue-yandex-maps": "^0.11.9",
     "vuex": "^3.6.2",

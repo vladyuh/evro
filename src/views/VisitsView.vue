@@ -51,13 +51,13 @@ export default {
           link: "/visits/planned/",
           name: "Ортопантомограмма",
           planned: "Запланировано на 20.04.22, 9:00",
-          image: "/img/common/vis-1.jpg"
+          image: "img/common/vis-1.jpg"
         },
         {
           link: "#",
           name: "Ортопантомограмма",
           planned: "Запланировано на 20.04.22, 9:00",
-          image: "/img/common/vis-2.jpg"
+          image: "img/common/vis-2.jpg"
         },
       ],
       history: [

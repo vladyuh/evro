@@ -25,7 +25,7 @@ export default {
   data: function () {
     return {
       isNotification: true,
-      userImage: "/img/common/user.jpg",
+      userImage: "img/common/user.jpg",
       userName: "Константин Алексеевич",
       telNumber: "tel:+375291800044"
     }

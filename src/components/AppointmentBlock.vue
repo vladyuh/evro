@@ -122,7 +122,7 @@
               <div class="input-icon__wrap">
                   <span class="icon">
                     <svg width="20" height="20">
-                      <use xlink:href="/img/sprites/sprite.svg#icon_search"></use>
+                      <use xlink:href="img/sprites/sprite.svg#icon_search"></use>
                     </svg>
                   </span>
                 <input type="search" v-model="searchQuery" placeholder="Найти услугу">
@@ -156,7 +156,7 @@
               <div class="input-icon__wrap">
                   <span class="icon">
                     <svg width="20" height="20">
-                      <use xlink:href="/img/sprites/sprite.svg#icon_search"></use>
+                      <use xlink:href="img/sprites/sprite.svg#icon_search"></use>
                     </svg>
                   </span>
                 <input type="search" v-model="searchQuer" placeholder="Найти услугу">
@@ -328,7 +328,7 @@ export default {
           serviceId: 0,
           name: "Подольская Елена Олеговна",
           job: "Врач-гастроэнтеролог",
-          image: "/img/common/dc-2.jpg",
+          image: "img/common/dc-2.jpg",
           dates: [{
             date: '29/6/2022',
             time: ['08:15', '09:15']
@@ -344,7 +344,7 @@ export default {
           serviceId: 1,
           name: "Басенко Татьяна Валерьевна",
           job: "Врач акушер-гинеколог",
-          image: "/img/common/dc-8.jpg",
+          image: "img/common/dc-8.jpg",
           dates: [{
             date: '1/7/2022',
             time: ['08:15', '09:15']
@@ -360,7 +360,7 @@ export default {
           serviceId: 1,
           name: "Ломаченко Мария Викторовна",
           job: "Врач акушер-гинеколог",
-          image: "/img/common/doc-9.jpg",
+          image: "img/common/doc-9.jpg",
           dates: [{
             date: '3/7/2022',
             time: ['08:15', '09:15']
@@ -376,7 +376,7 @@ export default {
           serviceId: 1,
           name: "Ивашкевич Надежда Владимировна",
           job: "Врач акушер-гинеколог",
-          image: "/img/common/doc-10.jpg",
+          image: "img/common/doc-10.jpg",
           dates: [{
             date: '5/7/2022',
             time: ['08:15', '09:15']

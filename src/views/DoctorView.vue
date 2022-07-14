@@ -4,7 +4,7 @@
       <div class="container">
         <router-link class="top-bar__back" to="/doctors">
           <svg width="28" height="28">
-            <use xlink:href="/img/sprites/sprite.svg#icon_chevron_left_small_border"></use>
+            <use xlink:href="img/sprites/sprite.svg#icon_chevron_left_small_border"></use>
           </svg>
         </router-link>
         <div class="top-bar__title">{{name}}</div>
@@ -46,7 +46,7 @@ export default {
   data: function () {
     return {
       name: "Голубенко Виталий Иванович",
-      image: "/img/common/doc-big.jpg",
+      image: "img/common/doc-big.jpg",
       job: "Врач сосудистый хирург",
       scopes: ['Консультативный прием','Хирургическое лечение'],
       text: "<p>Врач постоянно повышающий свою квалификацию, регулярно посещает курсы, семинары. Активный участник конференций, проходящих как в Беларуси, так и за рубежом.</p>",

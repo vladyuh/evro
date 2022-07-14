@@ -4,7 +4,7 @@
       <div class="container">
         <router-link class="top-bar__back" to="/visits/">
           <svg width="28" height="28">
-            <use xlink:href="/img/sprites/sprite.svg#icon_chevron_left_small_border"></use>
+            <use xlink:href="img/sprites/sprite.svg#icon_chevron_left_small_border"></use>
           </svg>
         </router-link>
         <div class="top-bar__title">{{pageTitle}}</div>

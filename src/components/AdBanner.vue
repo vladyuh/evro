@@ -30,12 +30,12 @@ export default {
         {
           title: "Лазерное лечение изменений кожи на аппарате Vbeam Prima",
           price: "280 руб.",
-          image: "/img/common/banner.jpg"
+          image: "img/common/banner.jpg"
         },
         {
           title: "Лазерное лечение изменений кожи на аппарате Vbeam Prima",
           price: "300 руб.",
-          image: "/img/common/banner.jpg"
+          image: "img/common/banner.jpg"
         }
       ]
     }

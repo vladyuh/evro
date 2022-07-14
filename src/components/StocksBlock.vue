@@ -19,11 +19,11 @@ export default {
       items: [
         {
           name: "Вакцинация против COVID-19",
-          image: "/img/common/st-1.jpg"
+          image: "img/common/st-1.jpg"
         },
         {
           name: "Проверить уровень витаминов со скидкой!",
-          image: "/img/common/st-2.jpg"
+          image: "img/common/st-2.jpg"
         },
       ]
     }

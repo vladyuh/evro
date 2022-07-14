@@ -9,7 +9,7 @@
         <div class="form__field photo">
           <label class="photo-placeholder" for="photo">
             <svg width="40" height="40">
-              <use xlink:href="/img/sprites/sprite.svg#icon_camera"></use>
+              <use xlink:href="img/sprites/sprite.svg#icon_camera"></use>
             </svg>
           </label>
           <div class="photo-caption">Добавить фото (необязательно)</div>
@@ -61,7 +61,7 @@
           <div class="login-block__back register-block__back">
             <router-link to="/login/">
               <svg width="24" height="24">
-                <use xlink:href="/img/sprites/sprite.svg#icon_chevron_left"></use>
+                <use xlink:href="img/sprites/sprite.svg#icon_chevron_left"></use>
               </svg>
               <span>Изменить телефон</span>
             </router-link>

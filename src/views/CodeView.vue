@@ -4,24 +4,23 @@
       <div class="login-block__logo"><img src="/img/common/logo.svg" width="188" height="68"></div>
       <div class="login-block__desc">
         <div class="title">Код доступа</div>
-        <div class="text">На номер <span class="number">{{number}}</span> было отправлено СМС с кодом доступа</div>
+        <div class="text">На номер <span class="number">{{form.number}}</span> было отправлено СМС с кодом доступа</div>
       </div>
-      <form class="login-block__form" action="">
+      <form class="login-block__form" @submit="sendCode($event)">
         <div class="form__field pincode">
-          <input type="number">
-          <input type="number">
-          <input type="number">
-          <input type="number">
-          <input type="hidden" name="pincode" v-model="pin">
+          <PincodeInput
+              v-model="form.code"
+              placeholder="0"
+          />
         </div>
         <div class="form__submit">
-          <button class="btn btn-transparent" @click="getCode($event)">Получить код по СМС</button>
+          <button class="btn btn-transparent">Отправить</button>
         </div>
       </form>
       <div class="login-block__back">
         <router-link to="/login/">
         <svg width="24" height="24">
-          <use xlink:href="/img/sprites/sprite.svg#icon_chevron_left"></use>
+          <use xlink:href="img/sprites/sprite.svg#icon_chevron_left"></use>
         </svg><span>Изменить телефон</span>
         </router-link>
       </div>
@@ -31,63 +30,41 @@
 
 <script>
 
-import axios from 'axios'
+import axios from 'axios';
+import PincodeInput from 'vue-pincode-input';
 
 export default {
   name: 'CodeView',
-  components: {},
+  components: {
+    PincodeInput
+  },
   data: function () {
     return {
-      number: "",
-      code: "",
-      pin: "",
-      data: null,
+      form: {
+        number: "",
+        code: "",
+      }
     }
   },
   methods: {
-    getCode: function (e){
+    sendCode: function (e){
       e.preventDefault()
-      axios.get('/').then((response) => this.data = response.data.response)
-          .catch((error) => console.log(error.response.data));
-      let pincode = this.data.code;
-      if(pincode === this.pin){
-        this.$router.push({path: '/register', query:{"phone": this.number}})
-      }
+      axios.post('/', this.form)
+          .then((res) => {
+            console.log(res);
+            this.$router.push({path: '/register'})
+          })
+          .catch((error) => {
+            alert(error.response.status)
+          }).finally(() => {
+      });
     }
   },
   created() {
     if(this.$route.query.phone) {
-      this.number = this.$route.query.phone;
+      this.form.number = this.$route.query.phone;
     }
   },
-  mounted() {
-    let pincode = document.querySelectorAll(".pincode input");
-    pincode.forEach(function (el){
-      el.addEventListener("keydown", function (){
-        el.value = "";
-      });
-      el.addEventListener("keyup", function (){
-        var parent = el.parentElement;
-        var val = el.value;
-        var inputs = el.parentNode.querySelectorAll("input[type=\"number\"]");
-
-        if(val === val.replace(/[0-9]/, "")) {
-          el.value= "";
-          return false;
-        }
-
-        el.nextElementSibling.focus();
-
-        var fullval = "";
-        inputs.forEach(function (elem){
-          fullval = fullval + (parseInt(elem.value) || "0");
-        });
-
-        parent.querySelector("input[type=\"hidden\"]").value= fullval;
-
-      });
-    });
-  }
 }
 </script>
 

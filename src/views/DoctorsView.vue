@@ -23,7 +23,7 @@
               <span>Все врачи</span>
               <a class="block-title__link" href="#filters">
                 <svg width="24" height="24">
-                  <use xlink:href="/img/sprites/sprite.svg#icon_filter"></use>
+                  <use xlink:href="img/sprites/sprite.svg#icon_filter"></use>
                 </svg>
               </a>
             </div>
@@ -32,7 +32,7 @@
                 <div class="input-icon__wrap">
                   <span class="icon">
                     <svg width="20" height="20">
-                      <use xlink:href="/img/sprites/sprite.svg#icon_search"></use>
+                      <use xlink:href="img/sprites/sprite.svg#icon_search"></use>
                     </svg>
                   </span>
                   <input type="search" v-model="searchQuery" placeholder="Найти врача">
@@ -76,21 +76,21 @@ export default {
           name: "Чудовский Олег Анатольевич",
           job: "Врач-реабилитолог",
           link: "Записаться на прием",
-          image: "/img/common/doc-1.jpg",
+          image: "img/common/doc-1.jpg",
           withLink: "#",
         },
         {
           name: "Козакова Оксана Григорьевна",
           job: "Терапевт",
           link: "Записаться на прием",
-          image: "/img/common/doc-2.jpg",
+          image: "img/common/doc-2.jpg",
           withLink: "#",
         },
         {
           name: "Козакова Оксана Григорьевна",
           job: "Терапевт",
           link: "Записаться на прием",
-          image: "/img/common/doc-3.jpg",
+          image: "img/common/doc-3.jpg",
           withLink: "#"
         },
       ],
@@ -99,7 +99,7 @@ export default {
           name: "Берстенёва Лариса Витальевна",
           job: "Врач-дерматолог",
           link: "Записаться на прием",
-          image: "/img/common/dc-1.jpg",
+          image: "img/common/dc-1.jpg",
           withLink: "#",
           dir: "Дерматология",
         },
@@ -107,7 +107,7 @@ export default {
           name: "Подольская Елена Олеговна",
           job: "Врач-гастроэнтеролог",
           link: "Записаться на прием",
-          image: "/img/common/dc-2.jpg",
+          image: "img/common/dc-2.jpg",
           withLink: "#",
           dir: "Гастроэнтерология"
         },
@@ -115,7 +115,7 @@ export default {
           name: "Смертин Николай Владимирович",
           job: "Врач-оториноларинголог",
           link: "Записаться на прием",
-          image: "/img/common/dc-3.jpg",
+          image: "img/common/dc-3.jpg",
           withLink: "#",
           dir: "Оториноларингология"
         },
@@ -123,7 +123,7 @@ export default {
           name: "Зингалев Сергей Олегович",
           job: "Врач онколог-хирург, маммолог",
           link: "Записаться на прием",
-          image: "/img/common/dc-4.jpg",
+          image: "img/common/dc-4.jpg",
           withLink: "#",
           dir: "Онкология"
         },
@@ -131,7 +131,7 @@ export default {
           name: "Козакова Оксана Григорьевна",
           job: "Терапевт",
           link: "Записаться на прием",
-          image: "/img/common/dc-5.jpg",
+          image: "img/common/dc-5.jpg",
           withLink: "#",
           dir: "Терапия"
         },
@@ -139,7 +139,7 @@ export default {
           name: "Бабров Артем Александрович",
           job: "Врач-травматолог-ортопед",
           link: "Записаться на прием",
-          image: "/img/common/dc-7.jpg",
+          image: "img/common/dc-7.jpg",
           withLink: "#",
           dir: "Травматология"
         },
@@ -147,7 +147,7 @@ export default {
           name: "Басенко Татьяна Валерьевна",
           job: "Врач-акушер-гинеколог",
           link: "Записаться на прием",
-          image: "/img/common/dc-8.jpg",
+          image: "img/common/dc-8.jpg",
           withLink: "#",
           dir: "Гинекология"
         },
@@ -155,7 +155,7 @@ export default {
           name: "Багрицевич Николай Викторович",
           job: "Врач-уролог",
           link: "Записаться на прием",
-          image: "/img/common/dc-9.jpg",
+          image: "img/common/dc-9.jpg",
           withLink: "#",
           dir: "Урология",
           display: true,
@@ -164,7 +164,7 @@ export default {
           name: "Голубенко Виталий Иванович",
           job: "Врач сосудистый хирург",
           link: "Записаться на прием",
-          image: "/img/common/dc-10.jpg",
+          image: "img/common/dc-10.jpg",
           withLink: "/doctors/doctor/",
           dir: "Хирургия"
         }

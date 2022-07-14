@@ -167,3 +167,16 @@
   }
 
 }
+
+.form__field.pincode{
+  .vue-pincode-input-wrapper{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .vue-pincode-input{
+    max-width: 25%;
+  }
+}
+

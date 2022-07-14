@@ -4,7 +4,7 @@
       <div class="popup-close">
         <a href="#close">
         <svg width="24" height="24">
-          <use xlink:href="img/sprites/sprite.svg#ic_close"></use>
+          <use xlink:href="/img/sprites/sprite.svg#ic_close"></use>
         </svg></a></div>
       <div class="popup-content">
         <div class="popup-content__title">Карта</div>

@@ -4,7 +4,7 @@
       <div class="container">
         <router-link class="top-bar__back" to="/services/">
           <svg width="28" height="28">
-            <use xlink:href="img/sprites/sprite.svg#icon_chevron_left_small_border"></use>
+            <use xlink:href="/img/sprites/sprite.svg#icon_chevron_left_small_border"></use>
           </svg>
         </router-link>
         <div class="top-bar__title">{{pageTitle}}</div>
@@ -36,7 +36,7 @@
       <div class="popup popup-docs">
         <div class="popup-close"><a href="#close">
           <svg width="24" height="24">
-            <use xlink:href="img/sprites/sprite.svg#ic_close"></use>
+            <use xlink:href="/img/sprites/sprite.svg#ic_close"></use>
           </svg></a></div>
         <div class="popup-content">
           <div class="popup-content__title">О докторе</div>

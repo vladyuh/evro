@@ -11,14 +11,23 @@
             <input type="tel" name="phone" v-model="form.phone" placeholder="" required="required"  v-maska="'+7 (###) ###-##-##'"/>
           </div>
         </div>
+        <div class="form__field">
+          <div class="input input-date">
+            <span class="label">Дата рождения</span>
+            <input type="date" name="date" v-model="form.birthDate" placeholder="" required="required"/>
+          </div>
+        </div>
         <div class="form__submit">
           <button class="btn btn-cyan">Получить код по СМС</button>
+        </div>
+        <div class="form__error" v-if="errors">
+          <p>{{errors}}</p>
         </div>
       </form>
       <div class="login-block__back">
         <a href="#">
           <svg width="24" height="24">
-            <use xlink:href="img/sprites/sprite.svg#icon_chevron_left"></use>
+            <use xlink:href="/img/sprites/sprite.svg#icon_chevron_left"></use>
           </svg>
           <span>Назад на сайт</span>
         </a>
@@ -39,8 +48,10 @@ export default {
   directives: { maska },
   data: function () {
     return {
+      errors: "",
       form: {
         phone: "",
+        birthDate: ""
       }
     }
   },
@@ -51,7 +62,9 @@ export default {
       axios.post('/', this.form)
           .then((res) => {
             console.log(res);
-            this.$router.push({path: '/code', query:{"phone": this.form.phone}})
+            if(res.status === 200){
+              this.$router.push({path: 'code', query:{"phone": this.form.phone}})
+            }
           })
           .catch((error) => {
             alert(error.response.status)

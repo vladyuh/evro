@@ -7,7 +7,7 @@
         <div class="input input-search input-icon">
           <div class="input-icon__wrap"><span class="icon">
                   <svg width="20" height="20">
-                    <use xlink:href="img/sprites/sprite.svg#icon_search"></use>
+                    <use xlink:href="/img/sprites/sprite.svg#icon_search"></use>
                   </svg></span>
             <input type="search" v-model="searchQuery" placeholder="Найти врача или услугу">
           </div>

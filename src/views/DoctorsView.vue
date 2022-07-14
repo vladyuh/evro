@@ -23,7 +23,7 @@
               <span>Все врачи</span>
               <a class="block-title__link" href="#filters">
                 <svg width="24" height="24">
-                  <use xlink:href="img/sprites/sprite.svg#icon_filter"></use>
+                  <use xlink:href="/img/sprites/sprite.svg#icon_filter"></use>
                 </svg>
               </a>
             </div>
@@ -32,7 +32,7 @@
                 <div class="input-icon__wrap">
                   <span class="icon">
                     <svg width="20" height="20">
-                      <use xlink:href="img/sprites/sprite.svg#icon_search"></use>
+                      <use xlink:href="/img/sprites/sprite.svg#icon_search"></use>
                     </svg>
                   </span>
                   <input type="search" v-model="searchQuery" placeholder="Найти врача">

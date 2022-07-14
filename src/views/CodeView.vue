@@ -16,11 +16,14 @@
         <div class="form__submit">
           <button class="btn btn-transparent">Отправить</button>
         </div>
+        <div class="form__error" v-if="errors">
+          <p>{{errors}}</p>
+        </div>
       </form>
       <div class="login-block__back">
         <router-link to="/login/">
         <svg width="24" height="24">
-          <use xlink:href="img/sprites/sprite.svg#icon_chevron_left"></use>
+          <use xlink:href="/img/sprites/sprite.svg#icon_chevron_left"></use>
         </svg><span>Изменить телефон</span>
         </router-link>
       </div>
@@ -40,6 +43,7 @@ export default {
   },
   data: function () {
     return {
+      errors: "",
       form: {
         number: "",
         code: "",

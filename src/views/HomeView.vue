@@ -8,7 +8,7 @@
           <span>Любимые врачи</span>
           <router-link to="/doctors/" class="block-title__link">
             <span>Все</span>
-            <svg width="24" height="24"><use xlink:href="img/sprites/sprite.svg#icon_chevron_right"></use></svg>
+            <svg width="24" height="24"><use xlink:href="/img/sprites/sprite.svg#icon_chevron_right"></use></svg>
           </router-link>
         </div>
         <FavoriteDoctors :doctors="doctors"></FavoriteDoctors>
@@ -20,7 +20,7 @@
           <span>План визитов</span>
           <router-link class="block-title__link" to="/visits/"><span>Все</span>
             <svg width="24" height="24">
-              <use xlink:href="img/sprites/sprite.svg#icon_chevron_right"></use>
+              <use xlink:href="/img/sprites/sprite.svg#icon_chevron_right"></use>
             </svg>
           </router-link>
         </div>
@@ -39,7 +39,7 @@
           <span>Акции</span>
           <a class="block-title__link" href="#"><span>Все</span>
             <svg width="24" height="24">
-              <use xlink:href="img/sprites/sprite.svg#icon_chevron_right"></use>
+              <use xlink:href="/img/sprites/sprite.svg#icon_chevron_right"></use>
             </svg>
           </a>
         </div>
@@ -53,7 +53,7 @@
           <router-link class="block-title__link" to="/analyzes/">
             <span>Все</span>
             <svg width="24" height="24">
-              <use xlink:href="img/sprites/sprite.svg#icon_chevron_right"></use>
+              <use xlink:href="/img/sprites/sprite.svg#icon_chevron_right"></use>
             </svg>
           </router-link>
         </div>
@@ -130,27 +130,27 @@ export default {
       services: [
         {
           name: "Записаться на прием",
-          image: "img/sprites/sprite.svg#ser-1"
+          image: "/img/sprites/sprite.svg#ser-1"
         },
         {
           name: "Мой паспорт здоровья",
-          image: "img/sprites/sprite.svg#ser-2"
+          image: "/img/sprites/sprite.svg#ser-2"
         },
         {
           name: "Записаться на диагностику",
-          image: "img/sprites/sprite.svg#ser-3"
+          image: "/img/sprites/sprite.svg#ser-3"
         },
         {
           name: "Сдать        анализы",
-          image: "img/sprites/sprite.svg#ser-4"
+          image: "/img/sprites/sprite.svg#ser-4"
         },
         {
           name: "Хирургия",
-          image: "img/sprites/sprite.svg#ser-5"
+          image: "/img/sprites/sprite.svg#ser-5"
         },
         {
           name: "Программы",
-          image: "img/sprites/sprite.svg#ser-6"
+          image: "/img/sprites/sprite.svg#ser-6"
         },
       ],
       analyzes: [

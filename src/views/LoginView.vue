@@ -2,13 +2,13 @@
   <div class="login-block">
     <div class="container">
       <div class="login-block__logo">
-        <img src="img/common/logo.svg" width="188" height="68">
+        <img v-bind:src = "`${this.theme_path}img/common/logo.svg`" width="188" height="68">
       </div>
       <form class="login-block__form" @submit="submit($event)">
         <div class="form__field">
           <div class="input input-tel">
             <span class="label">Ваш номер телефона</span>
-            <input type="tel" name="phone" v-model="form.phone" placeholder="" required="required"  v-maska="'+7 (###) ###-##-##'"/>
+            <input type="tel" name="phone" v-model="form.phone" placeholder="" required="required"  v-maska="'+375(##)###-##-##'"/>
           </div>
         </div>
         <div class="form__field">
@@ -25,9 +25,9 @@
         </div>
       </form>
       <div class="login-block__back">
-        <a href="#">
+        <a href="/">
           <svg width="24" height="24">
-            <use xlink:href="/img/sprites/sprite.svg#icon_chevron_left"></use>
+            <use v-bind:xlink:href = "`${this.theme_path}img/sprites/sprite.svg#icon_chevron_left`"></use>
           </svg>
           <span>Назад на сайт</span>
         </a>
@@ -50,20 +50,26 @@ export default {
     return {
       errors: "",
       token: "",
+      patientId: "",
+      theme_path:"",
       form: {
         phone: "",
         birthDate: ""
       }
     }
   },
+  created() {
+    this.theme_path = localStorage.getItem('theme_path');
+  },
   methods: {
     submit: function (e){
       e.preventDefault();
 
-      axios.post('/', this.form)
+      axios.post('https://api.evromedica.by/cabinet/auth', this.form)
           .then((res) => {
             console.log(res);
-            if(res.status === 200){
+            if(res.status === 200) {
+              localStorage.setItem('patientId', res.data.patientId)
               this.$router.push({path: 'code', query:{"phone": this.form.phone}})
             }
           })

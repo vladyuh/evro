@@ -7,7 +7,7 @@
             <li class="splide__slide" v-for="(item, i) in items" :key="i">
               <div class="banner-block__text">{{ item.title }}</div>
               <div class="banner-block__link">{{ item.price }}</div>
-              <picture>
+              <picture v-if="item.image">
                 <img :src="item.image" width="100%" height="100%">
               </picture>
             </li>
@@ -19,26 +19,35 @@
 </template>
 
 <script>
-
+import axios from "axios";
 import Splide from '@splidejs/splide';
 
 export default {
   name: 'AdBanner',
   data: function () {
     return {
-      items: [
-        {
-          title: "Лазерное лечение изменений кожи на аппарате Vbeam Prima",
-          price: "280 руб.",
-          image: "img/common/banner.jpg"
-        },
-        {
-          title: "Лазерное лечение изменений кожи на аппарате Vbeam Prima",
-          price: "300 руб.",
-          image: "img/common/banner.jpg"
-        }
-      ]
+      items: []
     }
+  },
+  created() {
+    console.log(this.items);
+    let site_url = localStorage.getItem('site_url');
+
+    axios.get(site_url + '/wp-json/lk/v1/stocks/','',{
+        headers: {
+          'Content-Type': 'application/json'
+        }
+    })
+    .then((res) => {
+          console.log(res.data);
+          if(res.status === 200) {
+            let items = JSON.parse(res.data);
+            this.items = items
+            console.log(items);
+          }
+        })
+        .finally(() => {
+    });
   },
   mounted() {
     new Splide(".banner-block__slider", {

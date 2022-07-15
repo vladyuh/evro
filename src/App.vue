@@ -16,11 +16,17 @@ window.onload = function () {
 export default {
   data: function (){
     return {
-      token: "23123123123fasfdasd"
+      site_url: "https://evromedica.fvds.ru",
+      theme_path: "/",
+      code: "",
+      patientId: "",
+      expireDate: "",
+      user:{},
     }
   },
   created() {
-    localStorage.setItem('token', this.token)
+    localStorage.setItem('theme_path',this.theme_path);
+    localStorage.setItem('site_url',this.site_url);
   },
 }
 

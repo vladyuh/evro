@@ -1,8 +1,8 @@
 <template>
   <div class="user-block">
     <div class="container">
-      <router-link class="user-block__image" v-bind:class="{'with-notification':isNotification}" to="/">
-        <img v-bind:src="userImage" width="40" height="40"/></router-link>
+      <router-link class="user-block__image" v-bind:class="{'with-notification':isNotification}" to="/lk/">
+        <img v-if="userImage" v-bind:src="userImage" width="40" height="40"/></router-link>
       <div class="user-block__name">Здравствуйте, <strong>{{ userName }}</strong></div>
       <a class="user-block__callback" v-bind:href="telNumber">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 20 20" id="icon_phone">
@@ -20,16 +20,38 @@
 
 <script>
 
+import axios from "axios";
+
 export default {
   name: 'UserBlock',
   data: function () {
     return {
-      isNotification: true,
-      userImage: "img/common/user.jpg",
-      userName: "Константин Алексеевич",
+      isNotification: false,
+      userImage: "",
+      userName: "",
       telNumber: "tel:+375291800044"
     }
-  }
+  },
+  created() {
+    let user = localStorage.getItem('user');
+    if(user === null || user.patientId === undefined) {
+      axios.get('https://api.evromedica.by/cabinet/patientdata/'+localStorage.getItem('patientId'),{},{headers: {
+        'X-Pin': localStorage.getItem('code')
+      }})
+      .then((res) => {
+        user = res.data[0];
+        localStorage.setItem('user', user);
+
+      })
+      .finally(() => {
+        this.userName = user.name + ' ' + user.surname;
+      });
+    }
+    else{
+      this.userName = user.name + ' ' + user.surname;
+    }
+    this.theme_path = localStorage.getItem('theme_path');
+  },
 }
 </script>
 

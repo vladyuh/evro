@@ -4,7 +4,7 @@
           <div class="text">
             <router-link class="text-name" v-bind:to="item.withLink">{{item.name}}</router-link>
             <div class="text-caption">{{item.job}}</div>
-            <a class="text-link" href="#">{{item.link}}</a>
+            <a class="text-link" href="/lk/appointment/">{{item.link}}</a>
             <a href="#view" class="text-toggle" v-if="item.text" @click="toggle(item.name)"></a>
           </div>
           <div class="image">

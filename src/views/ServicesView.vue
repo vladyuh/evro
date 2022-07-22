@@ -7,7 +7,7 @@
         <div class="input input-search input-icon">
           <div class="input-icon__wrap"><span class="icon">
                   <svg width="20" height="20">
-                    <use xlink:href="/img/sprites/sprite.svg#icon_search"></use>
+                    <use v-bind:xlink:href = "`${this.theme_path}img/sprites/sprite.svg#icon_search`"></use>
                   </svg></span>
             <input type="search" v-model="searchQuery" placeholder="Найти врача или услугу">
           </div>
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-
+import axios from "axios";
 import UserBlock from '@/components/UserBlock.vue'
 import BottomAppbar from "@/components/BottomAppbar";
 import PageTitle from "@/components/PageTitle";
@@ -40,29 +40,13 @@ export default {
   },
   data: function () {
     return {
+      theme_path: "",
       pageTitle: "Услуги",
       services: [
         {
-          title: "Диагностика",
-          subitems: [
-            {
-              name: "Ортопантомограмма",
-              link: "#",
-            },
-            {
-              name: "Ультразвуковая диагностика",
-              link: "#",
-            },
-            {
-              name: "Функциональная диагностика",
-              link: "#",
-            },
-            {
-              name: "Эндоскопия",
-              link: "#",
-            }
-          ],
-        },
+          title: "",
+          subitems: [],
+        }/*,
         {
           title: "Лечение",
           subitems: [
@@ -121,7 +105,7 @@ export default {
               link: "#",
             },
           ],
-        }
+        }*/
       ],
       menuItems: [
         {
@@ -131,7 +115,7 @@ export default {
           name: "Услуги",
           isCenter: false,
           isActive: true,
-          link: "/services/",
+          link: "/lk/services/",
         },
         {
           icon: "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
@@ -143,7 +127,7 @@ export default {
               "</svg>",
           name: "Анализы",
           isCenter: false,
-          link: "/analyzes/",
+          link: "/lk/analyzes/",
         },
         {
           icon: "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
@@ -152,7 +136,7 @@ export default {
               "</svg>",
           name: "Запись",
           isCenter: true,
-          link: "/appointment/",
+          link: "/lk/appointment/",
         },
         {
           icon: "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
@@ -161,7 +145,7 @@ export default {
               "</svg>",
           name: "Визиты",
           isCenter: false,
-          link: "/visits/",
+          link: "/lk/visits/",
         },
         {
           icon: "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
@@ -172,11 +156,31 @@ export default {
               "</svg>",
           name: "Врачи",
           isCenter: false,
-          link: "/doctors/",
+          link: "/lk/doctors/",
         }
       ],
       searchQuery: '',
     }
+  },
+  created() {
+    this.theme_path = localStorage.getItem('theme_path');
+
+    axios.get('https://api.evromedica.by/cabinet/services/categories/0/0/','',{
+      headers: {
+        'X-Pin': localStorage.getItem('code')
+      }
+    })
+    .then((res) => {
+      if(res.status === 200) {
+        res.data.forEach(element => {
+          this.services[0].subitems.push({
+            name:element.title,
+            link:'/lk/services/service/'+element.id
+          });
+        });
+      }
+      
+    });
   },
   methods: {
     filterServices: function (subitems) {

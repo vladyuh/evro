@@ -21,7 +21,7 @@
         </router-link>
       </div>
     </div>
-    <form class="appointment-block__steps">
+    <form class="appointment-block__steps" @submit="submit($event)">
 
       <div class="appointment-block" v-show="activeStep===0">
         <div class="container">
@@ -49,7 +49,7 @@
                 <div class="caption-desc" v-if="serviceChosen.length!==0">{{ serviceChosen }}</div>
               </div>
             </div>
-            <div class="appointment-block__item appointment-block__item--doctor" v-on:click="activeStep=3">
+            <div class="appointment-block__item appointment-block__item--doctor" v-on:click="doctorClicked()">
               <div class="icon"
                    v-bind:style="doctorChosen.length ? { 'background-image': 'url(' + getDoctor(doctorChosen,'image') + ')' } : { 'background-image': 'none' }">
                 <svg v-show="!doctorChosen.length" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -74,7 +74,7 @@
                 <div class="caption-desc">{{ getDoctor(doctorChosen, 'job') }}</div>
               </div>
             </div>
-            <div class="appointment-block__item appointment-block__item--date" v-on:click="dateClicked()">
+            <div class="appointment-block__item appointment-block__item--date" v-on:click="datePunktClicked()">
               <div class="icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -122,7 +122,7 @@
               <div class="input-icon__wrap">
                   <span class="icon">
                     <svg width="20" height="20">
-                      <use xlink:href="/img/sprites/sprite.svg#icon_search"></use>
+                      <use v-bind:xlink:href = "`${this.theme_path}img/sprites/sprite.svg#icon_search`"></use>
                     </svg>
                   </span>
                 <input type="search" v-model="searchQuery" placeholder="Найти услугу">
@@ -132,7 +132,7 @@
           <div class="appointment-block__directions" v-if="!doctorChosen.length">
             <div class="appointment-block__direction" v-for="(item, i) in search(services)" :key="i">
               <label>{{ item.name }}
-                <input type="radio" v-bind:value="item.name" v-model="serviceSelected" v-on:click="activeStep=2"
+                <input type="radio" v-bind:value="item.name" v-model="serviceSelected" v-on:click="categoryServiceClicked(item.id)"
                        name="direction"/>
               </label>
             </div>
@@ -140,7 +140,7 @@
           <div class="appointment-block__directions" v-else>
             <div class="appointment-block__direction" v-for="(item, i) in search(filteredServices)" :key="i">
               <label>{{ item.name }}
-                <input type="radio" v-bind:value="item.name" v-model="serviceSelected" v-on:click="activeStep=2"
+                <input type="radio" v-bind:value="item.name" v-model="serviceSelected" v-on:click="categoryServiceClicked(item.id)"
                        name="direction"/>
               </label>
             </div>
@@ -156,7 +156,7 @@
               <div class="input-icon__wrap">
                   <span class="icon">
                     <svg width="20" height="20">
-                      <use xlink:href="/img/sprites/sprite.svg#icon_search"></use>
+                      <use v-bind:xlink:href = "`${this.theme_path}img/sprites/sprite.svg#icon_search`"></use>
                     </svg>
                   </span>
                 <input type="search" v-model="searchQuer" placeholder="Найти услугу">
@@ -166,7 +166,7 @@
           <div class="appointment-block__services">
             <div class="appointment-block__service" v-for="item in getServiceItems(serviceSelected)" :key="item.name">
               <label>{{ item.name }}
-                <input type="radio" v-bind:value="item.name" v-model="serviceChosen" v-on:click="activeStep=0"
+                <input type="radio" v-bind:value="item.name" v-model="serviceChosen" v-on:click="serviceClicked(item.id)"
                        name="service"/>
               </label>
             </div>
@@ -183,7 +183,7 @@
                 <div class="text-name">{{ item.name }}</div>
                 <div class="text-caption">{{ item.job }}</div>
                 <input type="radio" name="doctor" v-bind:value="item.name" v-model="doctorChosen"
-                       v-on:click="activeStep=0"/>
+                       v-on:click="chooseDoctor(item.id)"/>
               </label>
               <div class="image"><img class="lazyload" loading="lazy" v-bind:src="item.image" width="80"
                                       height="104"/>
@@ -234,6 +234,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import {
   FunctionalCalendar
 } from 'vue-functional-calendar';
@@ -273,56 +274,232 @@ export default {
           backIndex: 0,
         }
       ],
-      services: [
-        {
-          id: 0,
-          name: "Гастроэнтерология",
-          items: [
-            {
-              name: "Гастроэнтерология 1 1",
-              desc: "Внимание! Не употребляйте пищу в течение 4-х часов перед приемом. В случае голода можете выпить обычной воды.",
-              price: "40",
-            },
-            {
-              name: "Гастроэнтерология 1 2",
-              desc: "Внимание! Не употребляйте пищу в течение 4-х часов перед приемом. В случае голода можете выпить обычной",
-              price: "40",
-            }
-          ],
-        },
-        {
-          id: 1,
-          name: "Гинекология",
-          items: [
-            {
-              name: "Кардиотокограмма плода",
-              desc: "Внимание! Не употребляйте пищу в течение 4-х часов перед приемом. В случае голода можете выпить",
-              price: "40",
-            },
-            {
-              name: "Первичный прием врача-акушера-гинеколога (детский)",
-              desc: "Внимание! Не употребляйте пищу в течение 4-х часов перед приемом. В случае голода можете",
-              price: "40",
-            },
-            {
-              name: "Первичный прием врача-акушера-гинеколога с осмотром на гинекологическом кресле",
-              desc: "Внимание! Не употребляйте пищу в течение 4-х часов перед приемом. В случае голода",
-              price: "40",
-            },
-            {
-              name: "Первичный прием врача-акушера-гинеколога без осмотра на гинекологическом кресле",
-              desc: "Внимание! Не употребляйте пищу в течение 4-х часов перед приемом. В случае.",
-              price: "40",
-            },
-            {
-              name: "Повторный прием врача-акушера-гинеколога без осмотра на гинекологическом кресле",
-              desc: "Внимание! Не употребляйте пищу в течение 4-х часов перед приемом",
-              price: "40",
-            }
-          ],
+      services: [],
+      doctors: [],
+      siteDoctors: [],
+      serviceSelectedId:"",
+      doctorSelectedId:"",
+      territorySelectedId:"",
+      cabinetSelectedId:"",
+      timeCabinet:[],
+      serviceSelected: [],
+      serviceChosen: [],
+      doctorChosen: [],
+      calendarData: {},
+      calendarConfigs: {
+        sundayStart: false,
+        dateFormat: 'dd/mm/yyyy',
+        isDatePicker: true,
+        isDateRange: false,
+        enabledDates: [],
+        markedDates: [],
+        maxSelDays: 1,
+        alwaysUseDefaultClasses: true,
+        dayNames: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'],
+        disabledDates: ['beforeToday'],
+        monthNames: [
+          'Январь',
+          'Февраль',
+          'Март',
+          'Апрель',
+          'Май',
+          'Июнь',
+          'Июль',
+          'Август',
+          'Сентябрь',
+          'Ноябрь',
+          'Декабрь',
+        ],
+      },
+      time: [],
+      dateTimeChosen: [],
+      searchQuery: '',
+      searchQuer: ''
+    }
+  },
+  methods: {
+    submit: function(e){
+      e.preventDefault();
+
+      axios.get('https://api.evromedica.by/cabinet/patientdata/'+localStorage.getItem('patientId'),{},{headers: {
+        'X-Pin': localStorage.getItem('code')
+      }})
+      .then((res) => {
+        let user = res.data[0];
+        let arDate = this.dateTimeChosen.split(',');
+        let date = arDate[0];
+        let time = arDate[1].trim();
+
+        let arDate2 = date.split('/');
+
+        let clickedDate =  new Date();
+        clickedDate.setDate(arDate2[0]);
+        clickedDate.setMonth(arDate2[1]-1);
+        clickedDate.setFullYear(arDate2[2]);
+
+        let isoDate = clickedDate.toISOString().slice(0, 10).split('-');
+
+
+        let arTime = [];
+        this.timeCabinet.forEach(element => {
+          if(element.time == time) {
+            arTime = element;
+          }
+        });
+        this.territorySelectedId = "";
+        if(arTime.territoryId !== undefined) {
+          this.territorySelectedId = arTime.territoryId;
+        }      
+        this.cabinetSelectedId = "";
+        if(arTime.cabinetId !== undefined) {
+          this.cabinetSelectedId = arTime.cabinetId;
         }
-      ],
-      doctors: [
+
+        var formatTime = isoDate[2]+'.'+isoDate[1]+'.'+isoDate[0]+' '+time;
+
+        var data = {
+          "serviceId":this.serviceSelectedId,
+          "staffId":this.doctorSelectedId,
+          "patientId":localStorage.getItem('patientId'),
+          "status":"new",
+          "serviceform":"платная услуга",
+          "name":user.surname + ' ' +user.name + ' ' + user.patronymic,
+          "email":"",
+          "phone":user.phone,
+          "requestId":"PCRtV4sq7",
+          "isOnline":true,
+          "date_birthday":user.birthdate,
+          "datetime":formatTime,
+          "territoryId":this.territorySelectedId,
+          "cabinetId":this.cabinetSelectedId,
+        };
+
+        axios.post('https://api.evromedica.by/cabinet/order/',data,{
+          headers: {
+            //'X-Pin': localStorage.getItem('code'),
+          }
+        })
+        .then((res) => {
+          if(res.status === 200) {
+            var dataSuccess = {
+              doctorChosen:this.doctorChosen,
+              datetime:formatTime,
+              serviceChosen:this.serviceChosen,
+              serviceSelected:this.serviceSelected
+            }
+            localStorage.setItem('order', JSON.stringify(dataSuccess));
+            this.$router.push({path: '/lk/appointment-success/'})
+          }
+        });
+      });
+    },
+    showTitle: function (index) {
+      return this.steps[index].title
+    },
+    moveBack: function (index) {
+      return this.steps[index].backIndex
+    },
+    getServiceById: function (name) {
+      if (this.serviceSelected.length) {
+        let result = this.services.find(function (item) {
+          return item.name === name
+        })
+        return result.id
+      }
+    },
+    getServiceItemSelected: function (id, key) {
+      let serviceItems = this.getServiceItems(this.serviceSelected);
+      let selected = serviceItems.find(function (item) {
+        return item.name === id
+      })
+      return selected[key]
+    },
+    getServiceItems: function (id) {
+      if (this.serviceSelected.length) {
+        let result = this.services.find(function (item) {
+          return item.name === id
+        })
+
+        let allServices = result.items;
+
+        if (this.searchQuer) {
+          allServices = allServices.filter((item) => {
+            if (item.name.toLowerCase().indexOf(this.searchQuer.toLowerCase()) !== -1) {
+              return true
+            }
+          })
+        }
+
+        return allServices;
+      }
+
+
+    },
+    chooseDoctor: function(id) {
+      this.doctorSelectedId = id;
+      this.activeStep=0
+    },
+    getDoctor: function (id, key) {
+      if (this.doctorChosen.length) {
+        let result = this.doctors.find(function (item) {
+          return item.name === id
+        })
+
+        return result[key]
+      }
+    },
+    setDoctors: function(){
+        if(this.doctors.length == 0) {
+          axios.get('https://api.evromedica.by/cabinet/staff/'+this.serviceSelectedId,'',{
+            headers: {
+              'X-Pin': localStorage.getItem('code')
+            }
+          })
+          .then((res) => {
+            if(res.status === 200) {
+              res.data.forEach(element => {
+                var doctor = {
+                  id: element.id,
+                  name: element.name,
+                  image:"",
+                  job:"",
+                  dates:[]
+                };
+                this.siteDoctors.forEach(siteDoctor => {
+                  if(siteDoctor.name == element.name) {
+                    doctor.image = siteDoctor.image;
+                    doctor.job = siteDoctor.job;
+                  }
+                });
+                
+                this.doctors.push(doctor);
+              });
+            }
+          });
+        }
+    },
+    doctorClicked: function () {
+      if (this.serviceSelectedId.length !== 0) {
+        if(this.siteDoctors.length == 0) {
+          axios.get(this.site_url+'/wp-json/lk/v1/doctors/','',{
+            headers: {
+              'Content-Type': 'application/json',
+            }
+          })
+          .then((res) => {
+            res.data.forEach(doctor => {
+              this.siteDoctors.push(doctor);
+            });
+            this.setDoctors();
+          })
+        }
+        else{
+          this.setDoctors();
+        }
+
+
+
+/*
         {
           id: 0,
           serviceId: 0,
@@ -387,96 +564,63 @@ export default {
             }
           ]
         }
-      ],
-      serviceSelected: [],
-      serviceChosen: [],
-      doctorChosen: [],
-      calendarData: {},
-      calendarConfigs: {
-        sundayStart: false,
-        dateFormat: 'dd/mm/yyyy',
-        isDatePicker: true,
-        isDateRange: false,
-        enabledDates: [],
-        markedDates: [],
-        maxSelDays: 1,
-        alwaysUseDefaultClasses: true,
-        dayNames: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'],
-        disabledDates: ['beforeToday'],
-        monthNames: [
-          'Январь',
-          'Февраль',
-          'Март',
-          'Апрель',
-          'Май',
-          'Июнь',
-          'Июль',
-          'Август',
-          'Сентябрь',
-          'Ноябрь',
-          'Декабрь',
-        ],
-      },
-      time: [],
-      dateTimeChosen: [],
-      searchQuery: '',
-      searchQuer: ''
-    }
-  },
-  methods: {
-    showTitle: function (index) {
-      return this.steps[index].title
-    },
-    moveBack: function (index) {
-      return this.steps[index].backIndex
-    },
-    getServiceById: function (name) {
-      if (this.serviceSelected.length) {
-        let result = this.services.find(function (item) {
-          return item.name === name
-        })
-        return result.id
+      */
+
+
+
+        this.activeStep = 3
       }
-    },
-    getServiceItemSelected: function (id, key) {
-      let serviceItems = this.getServiceItems(this.serviceSelected);
-      let selected = serviceItems.find(function (item) {
-        return item.name === id
-      })
-      return selected[key]
-    },
-    getServiceItems: function (id) {
-      if (this.serviceSelected.length) {
-        let result = this.services.find(function (item) {
-          return item.name === id
-        })
-
-        let allServices = result.items;
-
-        if (this.searchQuer) {
-          allServices = allServices.filter((item) => {
-            if (item.name.toLowerCase().indexOf(this.searchQuer.toLowerCase()) !== -1) {
-              return true
-            }
-          })
-        }
-
-        return allServices;
-      }
-
-
-    },
-    getDoctor: function (id, key) {
-      if (this.doctorChosen.length) {
-        let result = this.doctors.find(function (item) {
-          return item.name === id
-        })
-        return result[key]
+      else{
+        //this.activeStep = 3;
       }
     },
     dayClicked: function (event) {
       this.dateTimeChosen = []
-      this.time = []
+      this.time = [];
+      let dateTimes = [];
+
+      let docId = this.getDoctor(this.doctorChosen, 'id');
+      if(docId!== undefined && docId.length > 0) {
+        let arDate = event.date.split('/');
+
+        let clickedDate =  new Date();
+        clickedDate.setDate(arDate[0]);
+        clickedDate.setMonth(arDate[1]-1);
+        clickedDate.setFullYear(arDate[2]);
+        this.timeCabinet = [];
+
+        axios.get('https://api.evromedica.by/cabinet/timetable/'+docId+'/'+clickedDate.toISOString().slice(0, 10)+'/'+this.serviceSelectedId,'',{
+          headers: {
+            'X-Pin': localStorage.getItem('code')
+          }
+        })
+        .then((res) => {
+          if(res.status === 200) {
+            res.data.forEach(element => {
+              if(element.available) {
+                var date = new Date(element.date_start);
+                dateTimes.push(date.getHours()+':'+(date.getMinutes()<10?'0':'') + date.getMinutes());
+                this.timeCabinet.push({
+                  time:date.getHours()+':'+(date.getMinutes()<10?'0':'') + date.getMinutes(),
+                  territoryId:element.territoryId,
+                  cabinetId:element.cabinetId,
+                });
+              }
+            });
+            this.time = {
+              date: event.date,
+              time: dateTimes
+            };
+          }
+        });
+      }
+
+
+
+
+
+
+/*
       let dc = this.getDoctor(this.doctorChosen, 'dates')
       let timee = this.time
       dc.find(function (item) {
@@ -484,12 +628,44 @@ export default {
           timee = item
         }
       })
-      this.time = timee
+      this.time = timee*/
     },
-    dateClicked: function () {
+    datePunktClicked: function () {
       if (this.doctorChosen.length !== 0 && this.serviceChosen.length !== 0) {
         this.activeStep = 4
       }
+    },
+    serviceClicked(id){
+      this.doctors = [];
+      this.doctorChosen = [];
+      this.doctorSelectedId = "";
+      this.serviceSelectedId = id;
+      this.activeStep=0
+    },
+    categoryServiceClicked(id){
+      for(let i=0;i<this.services.length;++i) {
+        let element = this.services[i];
+        if(element.id == id && element.items.length == 0) {
+          axios.get('https://api.evromedica.by/cabinet/services/'+id+'/0/','',{
+            headers: {
+              'X-Pin': localStorage.getItem('code')
+            }
+          })
+          .then((res) => {
+            if(res.status === 200) {
+              res.data.forEach(element => {
+                this.services[i].items.push({
+                  id: element.id,
+                  name: element.title,
+                  desc: "",
+                  price: element.price
+                });
+              });
+            }
+          });
+        }
+      }
+      this.activeStep=2;
     },
     resetDates: function () {
       this.dateTimeChosen = []
@@ -520,26 +696,83 @@ export default {
     },
     doctorChosen: function () {
       this.resetDates();
-      let doc = this.getDoctor(this.doctorChosen, 'dates');
+
+      let docId = this.getDoctor(this.doctorChosen, 'id');
+      if(docId!== undefined && docId.length > 0) {
+        let today =  new Date();
+        axios.get('https://api.evromedica.by/cabinet/timetable/dates/'+docId+'/'+today.toISOString().slice(0, 10)+'/'+this.serviceSelectedId,'',{
+          headers: {
+            'X-Pin': localStorage.getItem('code')
+          }
+        })
+        .then((res) => {
+          if(res.status === 200) {
+            res.data.forEach(element => {
+              if(element.available) {
+                var date = new Date(element.date);
+                let month = parseInt(date.getMonth())+1;
+                this.calendarConfigs.enabledDates.push(date.getDate()+'/'+month+'/'+date.getFullYear())
+              }
+            });
+          }
+        });
+      }
+
+/*
+[{
+            date: '5/7/2022',
+            time: ['08:15', '09:15']
+          },
+            {
+              date: '6/7/2022',
+              time: ['10:15', '12:15']
+            }
+          ]
+*/
+      /*let doc = this.getDoctor(this.doctorChosen, 'dates');
       doc.forEach((el) => {
         this.calendarConfigs.enabledDates.push(el.date)
-      })
+      })*/
     }
   },
   computed: {
     filteredItems() {
-      return this.doctors.filter((item) => {
+      return this.doctors;
+      /*return this.doctors.filter((item) => {
         return item.serviceId === this.getServiceById(this.serviceSelected)
-      });
+      });*/
     },
     filteredServices() {
-      return this.services.filter((item) => {
+      return this.services;
+      /*return this.services.filter((item) => {
         return item.id === this.getDoctor(this.doctorChosen, 'serviceId')
-      });
+      });*/
     },
   },
   mounted() {
-  }
+  },
+  created() {
+    this.site_url = localStorage.getItem('site_url');
+    this.theme_path = localStorage.getItem('theme_path');
+
+    axios.get('https://api.evromedica.by/cabinet/services/categories/0/0/','',{
+      headers: {
+        'X-Pin': localStorage.getItem('code')
+      }
+    })
+    .then((res) => {
+      if(res.status === 200) {
+        res.data.forEach(element => {
+          this.services.push({
+            id: element.id,
+            name: element.title,
+            items: []
+          });
+        });
+      }
+      
+    });
+  },
 }
 </script>
 

@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "watch": "watch 'npm run build' ./src"
   },
   "dependencies": {
     "@splidejs/splide": "^4.0.7",
@@ -20,6 +21,7 @@
     "vue-router": "^3.5.1",
     "vue-yandex-maps": "^0.11.9",
     "vuex": "^3.6.2",
+    "watch": "^1.0.2",
     "ymaps": "^0.2.1"
   },
   "devDependencies": {

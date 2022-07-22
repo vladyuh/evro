@@ -36,6 +36,8 @@
 </template>
 
 <script>
+
+import axios from "axios";
 import UserBlock from "@/components/UserBlock";
 import BottomAppbar from "@/components/BottomAppbar";
 import PageTitle from "@/components/PageTitle";
@@ -55,59 +57,9 @@ export default {
     return {
       pageTitle: "Анализы",
       currentTab: 0,
-      analyzes: [
-        {
-          link: "/analyzes/view/",
-          date: "14 апреля",
-          title: "Клинический анализ крови",
-          ready: "Готов 18 апреля"
-        },
-        {
-          link: "#",
-          date: "13 апреля",
-          title: "Определение уровня АЛТ в крови",
-          ready: "Готов 17 апреля"
-        },
-      ],
-      history: [
-        {
-          link: "#",
-          name: "Общеклинические исследования",
-          date: "22 марта"
-        },
-        {
-          link: "#",
-          name: "Биохимические исследования",
-          date: "12 февраля"
-        },
-        {
-          link: "#",
-          name: "Иммунологические исследования",
-          date: "29 декабря 2021"
-        },
-      ],
-      analyzesLinks: [
-        {
-          name: "Общеклинические исследования",
-          link: "#",
-        },
-        {
-          name: "Гематологические исследования",
-          link: "/analyzes/appointment/",
-        },
-        {
-          name: "Биохимические исследования",
-          link: "#",
-        },
-        {
-          name: "Гистологические и цитологические исследования",
-          link: "#",
-        },
-        {
-          name: "Иммунологические исследования",
-          link: "#",
-        }
-      ],
+      analyzes: [],
+      history: [],
+      analyzesLinks: [],
       menuItems: [
         {
           icon: "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
@@ -115,7 +67,7 @@ export default {
               "          </svg>",
           name: "Услуги",
           isCenter: false,
-          link: "/services/",
+          link: "/lk/services/",
         },
         {
           icon: "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
@@ -127,7 +79,7 @@ export default {
               "</svg>",
           name: "Анализы",
           isCenter: false,
-          link: "/analyzes/",
+          link: "/lk/analyzes/",
           isActive: true,
         },
         {
@@ -137,7 +89,7 @@ export default {
               "</svg>",
           name: "Запись",
           isCenter: true,
-          link: "/appointment/",
+          link: "/lk/appointment/",
         },
         {
           icon: "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
@@ -146,7 +98,7 @@ export default {
               "</svg>",
           name: "Визиты",
           isCenter: false,
-          link: "/visits/",
+          link: "/lk/visits/",
         },
         {
           icon: "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
@@ -157,15 +109,94 @@ export default {
               "</svg>",
           name: "Врачи",
           isCenter: false,
-          link: "/doctors/",
+          link: "/lk/doctors/",
         }
       ]
     }
   },
   methods: {},
+  created() {
+    this.site_url = localStorage.getItem('site_url');
+    this.theme_path = localStorage.getItem('theme_path');
+
+    //new
+    var startDate = new Date().getTime() - 86400000*30;
+    startDate = new Date(startDate);
+    var endDate = new Date();
+
+    axios.get('https://api.evromedica.by/cabinet/analyzes/'+localStorage.getItem('patientId')+'/'+
+    startDate.toISOString().slice(0, 10)+'/'+endDate.toISOString().slice(0, 10),'',{
+        headers: {
+          'X-Pin': localStorage.getItem('code')
+        }
+    })
+    .then((res) => {
+      if(res.status === 200) {
+        res.data.forEach(element => {
+          if(element.status == 'Готов') {
+
+            this.analyzes.push(
+              {
+                link: "/lk/analyzes/view/?document="+element.documentId,
+                date: element.visitdate,
+                title: element.analyzes[0].servicename,
+                ready: 'Готов '+element.resultsdate
+              }
+            );
+          }
+        });
+      }
+    });
+
+
+    //history
+    startDate = new Date().getTime() - 86400000*60;
+    startDate = new Date(startDate);
+    endDate = new Date().getTime() - 86400000*30;
+    endDate = new Date(endDate);
+
+    axios.get('https://api.evromedica.by/cabinet/analyzes/'+localStorage.getItem('patientId')+'/'+
+    startDate.toISOString().slice(0, 10)+'/'+endDate.toISOString().slice(0, 10),'',{
+        headers: {
+          'X-Pin': localStorage.getItem('code')
+        }
+    })
+    .then((res) => {
+      if(res.status === 200) {
+        res.data.forEach(element => {
+          if(element.status == 'Готов') {
+            this.history.push(
+              {
+                link: "/lk/analyzes/view/?document="+element.documentId,
+                date: element.resultsdate,
+                name: element.analyzes[0].servicename,
+              }
+            );
+          }
+        });
+      }
+    });
+
+    axios.get('https://api.evromedica.by/cabinet/services/categories/0/0/','',{
+      headers: {
+        'X-Pin': localStorage.getItem('code')
+      }
+    })
+    .then((res) => {
+      if(res.status === 200) {
+        res.data.forEach(element => {
+          this.analyzesLinks.push({
+            link: '/lk/appointment/',
+            name: element.title,
+          });
+        });
+      }
+    });
+
+  }
 }
 </script>
 
 <style lang="scss">
 @import "styles/analyzes.scss";
-</style>
+</style>le>le>

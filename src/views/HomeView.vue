@@ -2,13 +2,15 @@
   <div class="mainpage">
     <UserBlock></UserBlock>
     <AdBanner></AdBanner>
-    <div class="doctors-block">
+    <div class="doctors-block" v-if="doctors.length > 0">
       <div class="container">
         <div class="block-title doctors-block__title">
           <span>Любимые врачи</span>
-          <router-link to="/doctors/" class="block-title__link">
+          <router-link to="/lk/doctors/" class="block-title__link">
             <span>Все</span>
-            <svg width="24" height="24"><use xlink:href="/img/sprites/sprite.svg#icon_chevron_right"></use></svg>
+            <svg width="24" height="24">
+              <use v-bind:xlink:href = "`${this.theme_path}img/sprites/sprite.svg#icon_chevron_right`"></use>
+            </svg>
           </router-link>
         </div>
         <FavoriteDoctors :doctors="doctors"></FavoriteDoctors>
@@ -18,9 +20,9 @@
       <div class="container">
         <div class="block-title visits-block__title">
           <span>План визитов</span>
-          <router-link class="block-title__link" to="/visits/"><span>Все</span>
+          <router-link class="block-title__link" to="/lk/visits/"><span>Все</span>
             <svg width="24" height="24">
-              <use xlink:href="/img/sprites/sprite.svg#icon_chevron_right"></use>
+              <use v-bind:xlink:href = "`${this.theme_path}img/sprites/sprite.svg#icon_chevron_right`"></use>
             </svg>
           </router-link>
         </div>
@@ -39,7 +41,7 @@
           <span>Акции</span>
           <a class="block-title__link" href="#"><span>Все</span>
             <svg width="24" height="24">
-              <use xlink:href="/img/sprites/sprite.svg#icon_chevron_right"></use>
+              <use v-bind:xlink:href = "`${this.theme_path}img/sprites/sprite.svg#icon_chevron_right`"></use>
             </svg>
           </a>
         </div>
@@ -50,10 +52,10 @@
       <div class="container">
         <div class="block-title analyzes-block__title">
           <span>Новые анализы</span>
-          <router-link class="block-title__link" to="/analyzes/">
+          <router-link class="block-title__link" to="/lk/analyzes/">
             <span>Все</span>
             <svg width="24" height="24">
-              <use xlink:href="/img/sprites/sprite.svg#icon_chevron_right"></use>
+              <use v-bind:xlink:href = "`${this.theme_path}img/sprites/sprite.svg#icon_chevron_right`"></use>
             </svg>
           </router-link>
         </div>
@@ -65,7 +67,7 @@
 </template>
 
 <script>
-
+import axios from 'axios';
 import UserBlock from '@/components/UserBlock.vue'
 import AdBanner from '@/components/AdBanner.vue'
 import FavoriteDoctors from "@/components/Favorites";
@@ -89,92 +91,47 @@ export default {
   },
   data: function (){
     return {
-      doctors: [
-        {
-          name: "Чудовский Олег Анатольевич",
-          job: "Врач-реабилитолог",
-          link: "Записаться на прием",
-          image: "img/common/doc-1.jpg",
-          withLink: "#"
-        },
-        {
-          name: "Козакова Оксана Григорьевна",
-          job: "Терапевт",
-          link: "Записаться на прием",
-          image: "img/common/doc-2.jpg",
-          withLink: "#"
-
-        },
-        {
-          name: "Козакова Оксана Григорьевна",
-          job: "Терапевт",
-          link: "Записаться на прием",
-          image: "img/common/doc-3.jpg",
-          withLink: "#"
-        },
-      ],
-      visits: [
-        {
-          link: "#",
-          name: "Ортопантомограмма",
-          planned: "Запланировано на 20.04.22, 9:00",
-          image: "img/common/vis-1.jpg"
-        },
-        {
-          link: "#",
-          name: "Ортопантомограмма",
-          planned: "Запланировано на 20.04.22, 9:00",
-          image: "img/common/vis-2.jpg"
-        },
-      ],
+      theme_path: '',
+      site_url: '',
+      favDoctors: [],
+      siteDoctors: null,
+      doctors: [],
+      visits: [],
       services: [
         {
           name: "Записаться на прием",
-          image: "/img/sprites/sprite.svg#ser-1"
+          image: localStorage.getItem('theme_path')+"img/sprites/sprite.svg#ser-1"
         },
         {
           name: "Мой паспорт здоровья",
-          image: "/img/sprites/sprite.svg#ser-2"
+          image: localStorage.getItem('theme_path')+"img/sprites/sprite.svg#ser-2"
         },
         {
           name: "Записаться на диагностику",
-          image: "/img/sprites/sprite.svg#ser-3"
+          image: localStorage.getItem('theme_path')+"img/sprites/sprite.svg#ser-3"
         },
         {
           name: "Сдать        анализы",
-          image: "/img/sprites/sprite.svg#ser-4"
+          image: localStorage.getItem('theme_path')+"img/sprites/sprite.svg#ser-4"
         },
         {
           name: "Хирургия",
-          image: "/img/sprites/sprite.svg#ser-5"
+          image: localStorage.getItem('theme_path')+"img/sprites/sprite.svg#ser-5"
         },
         {
           name: "Программы",
-          image: "/img/sprites/sprite.svg#ser-6"
+          image: localStorage.getItem('theme_path')+"img/sprites/sprite.svg#ser-6"
         },
       ],
-      analyzes: [
-        {
-          link: "#",
-          date: "14 апреля",
-          title: "Клинический анализ крови",
-          ready: "Готов 18 апреля"
-        },
-        {
-          link: "#",
-          date: "13 апреля",
-          title: "Определение уровня АЛТ в крови",
-          ready: "Готов 17 апреля",
-        },
-      ],
+      analyzes: [],
       menuItems: [
         {
           icon: "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
               "            <path d=\"M3 12H17M3 6H21M3 18H21\" stroke=\"black\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n" +
-              "          </svg>",
+              "</svg>",
           name: "Услуги",
           isCenter: false,
-          link: "/services/",
+          link: "/lk/services/",
         },
         {
           icon: "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
@@ -186,7 +143,7 @@ export default {
               "</svg>",
           name: "Анализы",
           isCenter: false,
-          link: "/analyzes/",
+          link: "/lk/analyzes/",
         },
         {
           icon: "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
@@ -195,7 +152,7 @@ export default {
               "</svg>",
           name: "Запись",
           isCenter: true,
-          link: "/appointment/",
+          link: "/lk/appointment/",
         },
         {
           icon: "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
@@ -204,7 +161,7 @@ export default {
               "</svg>",
           name: "Визиты",
           isCenter: false,
-          link: "/visits/",
+          link: "/lk/visits/",
         },
         {
           icon: "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
@@ -215,11 +172,157 @@ export default {
               "</svg>",
           name: "Врачи",
           isCenter: false,
-          link: "/doctors/",
+          link: "/lk/doctors/",
         }
       ]
     }
-  }
+  },
+  watch: {
+    favDoctors: function () {
+      axios.get(this.site_url+'/wp-json/lk/v1/doctors/','',{
+          headers: {
+            'Content-Type': 'application/json',
+          }
+      })
+      .then((res) => {
+        if(res.status === 200) {
+          var siteDoctors = [];
+          res.data.forEach(element => {
+            siteDoctors.push(element);
+          });
+          this.siteDoctors = siteDoctors;
+        }
+      });
+    },
+    siteDoctors: function () {
+      var allDoctors = [];
+      axios.get('https://api.evromedica.by/cabinet/staff/0','',{
+          headers: {
+            'X-Pin': localStorage.getItem('code')
+          }
+      })
+      .then((res) => {
+        if(res.status === 200) {
+          res.data.forEach(element => {
+            allDoctors.push(element);
+          });
+
+          this.favDoctors.forEach(name => {
+            var doctor = {
+              name: "",
+              job: "",
+              link: "Записаться на прием",
+              image: "",
+              withLink: ""
+            };
+
+            doctor.name = name;
+            allDoctors.forEach(doc => {
+              if(doc.name == name) {
+                doctor.withLink = "/lk/doctors/doctor/"+doc.id
+              }
+            });
+
+            this.siteDoctors.forEach(doc => {
+              if(doc.name == name) {
+                doctor.job = doc.job;
+                doctor.image = doc.image;
+              }
+            });
+            this.doctors.push(doctor);
+          });
+        }
+      });
+    }
+  },
+  created() {
+    this.site_url = localStorage.getItem('site_url');
+    this.theme_path = localStorage.getItem('theme_path');
+
+
+    //fav doctors
+    var favDoctors = [];
+    axios.get('https://api.evromedica.by/cabinet/history/'+localStorage.getItem('patientId'),'',{
+        headers: {
+          'X-Pin': localStorage.getItem('code')
+        }
+    })
+    .then((res) => {
+      if(res.status === 200) {
+        res.data.forEach(element => {
+          let found = false;
+          favDoctors.forEach((fav,i) => {
+            if(fav.name == element.doctor) {
+              favDoctors[i].count++;
+              found = true;
+            }
+          });
+          if(!found) {
+            favDoctors.push({
+              name: element.doctor,
+              count: 1
+            });
+          }
+        });
+        favDoctors.sort((a, b) => (a.count > b.count) ? 1 : -1);
+        var sortedDoctors = [];
+        favDoctors.forEach((fav) => {
+          sortedDoctors.push(fav.name);
+        });
+        this.favDoctors = sortedDoctors;
+      }
+    });
+
+    //visits
+    axios.get('https://api.evromedica.by/cabinet/appointment/'+localStorage.getItem('patientId')+'/0','',{
+        headers: {
+          'X-Pin': localStorage.getItem('code')
+        }
+    })
+    .then((res) => {
+      if(res.status === 200) {
+        res.data.forEach(element => {
+            this.visits.push(
+              {
+                link: "/lk/visits/planned/?document="+element.documentId,
+                name: element.services[0].servicename,
+                planned: "Запланировано на "+element.visitdate_start,
+                image: (element.gender == 'Женский') ? this.theme_path+"img/common/vis-2.jpg" : this.theme_path+"img/common/vis-1.jpg"
+              }
+            );
+        });
+      }
+    });
+
+
+    //analyzis
+    var startDate = new Date().getTime() - 86400000*30;
+    startDate = new Date(startDate);
+    var endDate = new Date();
+
+    axios.get('https://api.evromedica.by/cabinet/analyzes/'+localStorage.getItem('patientId')+'/'+
+    startDate.toISOString().slice(0, 10)+'/'+endDate.toISOString().slice(0, 10),'',{
+        headers: {
+          'X-Pin': localStorage.getItem('code')
+        }
+    })
+    .then((res) => {
+      if(res.status === 200) {
+        res.data.forEach(element => {
+          if(element.status == 'Готов') {
+            this.analyzes.push(
+              {
+                link: "/lk/analyzes/view/?document="+element.documentId,
+                date: element.visitdate,
+                title: element.analyzes[0].servicename,
+                ready: 'Готов '+element.resultsdate
+              }
+            );
+          }
+        });
+      }
+    });
+  },
 }
 </script>
 

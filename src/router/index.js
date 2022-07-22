@@ -12,8 +12,6 @@ function guardMyroute(to, from, next)
 {
   var isAuthenticated= false;
 
-  
-
   if(localStorage.getItem('patientId') && localStorage.getItem('code') && localStorage.getItem('expireDate')){
     var datetime_regex = /(\d\d)\.(\d\d)\.(\d\d\d\d)\s(\d\d):(\d\d)/;
     var date = datetime_regex.exec(localStorage.getItem('expireDate'));
@@ -27,14 +25,26 @@ function guardMyroute(to, from, next)
 
   if(isAuthenticated) 
   {
-    next(); // allow to enter route
+    if(to.name == 'login' || to.name == 'code' || to.name == 'register') {
+      next('/lk/');
+    }
+    else{
+      next(); // allow to enter route
+    }
+    
   } 
   else
   {
-    localStorage.setItem('patientId', '')
-    localStorage.setItem('code', '')
-    localStorage.setItem('expireDate', '')
-    next('/lk/login'); // go to '/login';
+    if(to.name != 'login' && to.name != 'code' && to.name != 'register')
+    {
+      localStorage.setItem('patientId', '');
+      localStorage.setItem('code', '');
+      localStorage.setItem('expireDate', '');
+      next('/lk/login/');
+    }
+    else{
+      next();
+    }
   }
 }
 
@@ -54,16 +64,19 @@ const routes = [
   {
     path: '/lk/login/',
     name: 'login',
+    beforeEnter : guardMyroute,
     component: LoginView
   },
   {
     path: '/lk/code/',
     name: 'code',
+    beforeEnter : guardMyroute,
     component: CodeView
   },
   {
     path: '/lk/register/',
     name: 'register',
+    beforeEnter : guardMyroute,
     component: RegisterView
   },
   {
@@ -73,7 +86,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/ServicesView.vue')
   },
   {
-    path: '/lk/services/service/',
+    path: '/lk/services/service/:id',
     name: 'service',
     beforeEnter : guardMyroute,
     component: () => import(/* webpackChunkName: "about" */ '../views/ServicesDetailView.vue')
@@ -121,7 +134,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/DoctorsView.vue')
   },
   {
-    path: '/lk/doctors/doctor/',
+    path: '/lk/doctors/doctor/:id',
     name: 'doctor',
     beforeEnter : guardMyroute,
     component: () => import(/* webpackChunkName: "about" */ '../views/DoctorView.vue')

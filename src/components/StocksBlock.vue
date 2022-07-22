@@ -11,24 +11,31 @@
 </template>
 
 <script>
-
+import axios from 'axios';
 export default {
   name: 'StocksBlock',
   data: function () {
     return {
-      items: [
-        {
-          name: "Вакцинация против COVID-19",
-          image: "img/common/st-1.jpg"
-        },
-        {
-          name: "Проверить уровень витаминов со скидкой!",
-          image: "img/common/st-2.jpg"
-        },
-      ]
+      items: []
     }
   },
   mounted() {
+  },
+  created(){
+    let site_url = localStorage.getItem('site_url');
+    //stocks
+    axios.get(site_url + '/wp-json/lk/v1/stocks/','',{
+        headers: {
+          'Content-Type': 'application/json'
+        }
+    })
+    .then((res) => {
+          if(res.status === 200) {
+            this.items = res.data
+          }
+        })
+        .finally(() => {
+    });
   }
 }
 </script>

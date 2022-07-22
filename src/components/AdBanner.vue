@@ -30,20 +30,16 @@ export default {
     }
   },
   created() {
-    console.log(this.items);
     let site_url = localStorage.getItem('site_url');
 
-    axios.get(site_url + '/wp-json/lk/v1/stocks/','',{
+    axios.get(site_url + '/wp-json/lk/v1/services/','',{
         headers: {
           'Content-Type': 'application/json'
         }
     })
     .then((res) => {
-          console.log(res.data);
           if(res.status === 200) {
-            let items = JSON.parse(res.data);
-            this.items = items
-            console.log(items);
+            this.items = res.data
           }
         })
         .finally(() => {

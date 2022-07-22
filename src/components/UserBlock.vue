@@ -51,6 +51,18 @@ export default {
       this.userName = user.name + ' ' + user.surname;
     }
     this.theme_path = localStorage.getItem('theme_path');
+    this.site_url = localStorage.getItem('site_url');
+
+    let image = this.site_url+"/wp-content/uploads/lk/avatars/"+localStorage.getItem('patientId')+".jpg";
+
+    fetch(image, { method: 'HEAD' })
+        .then(res => {
+            if (res.ok) {
+                this.userImage = image;
+            }
+        }).catch(err => console.log('Error:', err));
+
+    
   },
 }
 </script>

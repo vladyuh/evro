@@ -23,7 +23,7 @@
               <span>Все врачи</span>
               <a class="block-title__link" href="#filters">
                 <svg width="24" height="24">
-                  <use xlink:href="/img/sprites/sprite.svg#icon_filter"></use>
+                  <use v-bind:xlink:href="`${this.theme_path}img/sprites/sprite.svg#icon_filter`"></use>
                 </svg>
               </a>
             </div>
@@ -32,7 +32,7 @@
                 <div class="input-icon__wrap">
                   <span class="icon">
                     <svg width="20" height="20">
-                      <use xlink:href="/img/sprites/sprite.svg#icon_search"></use>
+                      <use v-bind:xlink:href="`${this.theme_path}img/sprites/sprite.svg#icon_search`"></use>
                     </svg>
                   </span>
                   <input type="search" v-model="searchQuery" placeholder="Найти врача">
@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import UserBlock from "@/components/UserBlock";
 import BottomAppbar from "@/components/BottomAppbar";
 import PageTitle from "@/components/PageTitle";
@@ -68,154 +69,24 @@ export default {
   },
   data: function () {
     return {
+      theme_path: "",
       pageTitle: "Врачи",
       currentTab: 0,
       searchQuery: '',
-      favorites: [
-        {
-          name: "Чудовский Олег Анатольевич",
-          job: "Врач-реабилитолог",
-          link: "Записаться на прием",
-          image: "img/common/doc-1.jpg",
-          withLink: "#",
-        },
-        {
-          name: "Козакова Оксана Григорьевна",
-          job: "Терапевт",
-          link: "Записаться на прием",
-          image: "img/common/doc-2.jpg",
-          withLink: "#",
-        },
-        {
-          name: "Козакова Оксана Григорьевна",
-          job: "Терапевт",
-          link: "Записаться на прием",
-          image: "img/common/doc-3.jpg",
-          withLink: "#"
-        },
-      ],
-      alldocs: [
-        {
-          name: "Берстенёва Лариса Витальевна",
-          job: "Врач-дерматолог",
-          link: "Записаться на прием",
-          image: "img/common/dc-1.jpg",
-          withLink: "#",
-          dir: "Дерматология",
-        },
-        {
-          name: "Подольская Елена Олеговна",
-          job: "Врач-гастроэнтеролог",
-          link: "Записаться на прием",
-          image: "img/common/dc-2.jpg",
-          withLink: "#",
-          dir: "Гастроэнтерология"
-        },
-        {
-          name: "Смертин Николай Владимирович",
-          job: "Врач-оториноларинголог",
-          link: "Записаться на прием",
-          image: "img/common/dc-3.jpg",
-          withLink: "#",
-          dir: "Оториноларингология"
-        },
-        {
-          name: "Зингалев Сергей Олегович",
-          job: "Врач онколог-хирург, маммолог",
-          link: "Записаться на прием",
-          image: "img/common/dc-4.jpg",
-          withLink: "#",
-          dir: "Онкология"
-        },
-        {
-          name: "Козакова Оксана Григорьевна",
-          job: "Терапевт",
-          link: "Записаться на прием",
-          image: "img/common/dc-5.jpg",
-          withLink: "#",
-          dir: "Терапия"
-        },
-        {
-          name: "Бабров Артем Александрович",
-          job: "Врач-травматолог-ортопед",
-          link: "Записаться на прием",
-          image: "img/common/dc-7.jpg",
-          withLink: "#",
-          dir: "Травматология"
-        },
-        {
-          name: "Басенко Татьяна Валерьевна",
-          job: "Врач-акушер-гинеколог",
-          link: "Записаться на прием",
-          image: "img/common/dc-8.jpg",
-          withLink: "#",
-          dir: "Гинекология"
-        },
-        {
-          name: "Багрицевич Николай Викторович",
-          job: "Врач-уролог",
-          link: "Записаться на прием",
-          image: "img/common/dc-9.jpg",
-          withLink: "#",
-          dir: "Урология",
-          display: true,
-        },
-        {
-          name: "Голубенко Виталий Иванович",
-          job: "Врач сосудистый хирург",
-          link: "Записаться на прием",
-          image: "img/common/dc-10.jpg",
-          withLink: "/doctors/doctor/",
-          dir: "Хирургия"
-        }
-      ],
-      direct: [
-        {
-          name: "Дерматология",
-          value: "Дерматология",
-        },
-        {
-          name: "Гастроэнтерология",
-          value: "Гастроэнтерология",
-        },
-        {
-          name: "Оториноларингология",
-          value: "Оториноларингология",
-        },
-        {
-          name: "Онкология",
-          value: "Онкология",
-        },
-        {
-          name: "Терапия",
-          value: "Терапия",
-        },
-        {
-          name: "Ортопедия",
-          value: "Ортопедия",
-        },
-        {
-          name: "Гинекология",
-          value: "Гинекология",
-        },
-        {
-          name: "Урология",
-          value: "Урология",
-        },
-        {
-          name: "Хирургия",
-          value: "Хирургия",
-        },
-      ],
+      favDoctors: [],
+      siteDoctors: null,
+      favorites: [],
+      alldocs: [],
+      direct: [],
       sort: [
         {
           name: "По алфавиту",
           value: "apha",
         },
-        {
+        /*{
           name: "По направлениям",
           value: "dir",
-        },
+        },*/
       ],
       menuItems: [
         {
@@ -224,7 +95,7 @@ export default {
               "          </svg>",
           name: "Услуги",
           isCenter: false,
-          link: "/services/",
+          link: "/lk/services/",
         },
         {
           icon: "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
@@ -236,7 +107,7 @@ export default {
               "</svg>",
           name: "Анализы",
           isCenter: false,
-          link: "/analyzes/",
+          link: "/lk/analyzes/",
         },
         {
           icon: "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
@@ -245,7 +116,7 @@ export default {
               "</svg>",
           name: "Запись",
           isCenter: true,
-          link: "/appointment/",
+          link: "/lk/appointment/",
         },
         {
           icon: "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
@@ -254,7 +125,7 @@ export default {
               "</svg>",
           name: "Визиты",
           isCenter: false,
-          link: "/visits/",
+          link: "/lk/visits/",
         },
         {
           icon: "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
@@ -266,13 +137,97 @@ export default {
           name: "Врачи",
           isCenter: false,
           isActive: true,
-          link: "/doctors/",
+          link: "/lk/doctors/",
         }
       ],
       selectedDir: [],
       selectedSort: "dir",
     }
   },
+
+  watch: {
+    favDoctors: function () {
+      axios.get(this.site_url+'/wp-json/lk/v1/doctors/','',{
+          headers: {
+            'Content-Type': 'application/json',
+          }
+      })
+      .then((res) => {
+        if(res.status === 200) {
+          var siteDoctors = [];
+          res.data.forEach(element => {
+            siteDoctors.push(element);
+          });
+          this.siteDoctors = siteDoctors;
+        }
+      });
+    },
+    siteDoctors: function () {
+      var allDoctors = [];
+      axios.get('https://api.evromedica.by/cabinet/staff/0','',{
+          headers: {
+            'X-Pin': localStorage.getItem('code')
+          }
+      })
+      .then((res) => {
+        if(res.status === 200) {
+          res.data.forEach(element => {
+            allDoctors.push(element);
+          });
+
+          this.favDoctors.forEach(name => {
+            var doctor = {
+              name: "",
+              job: "",
+              link: "Записаться на прием",
+              image: "",
+              withLink: "",
+              display: true,
+            };
+            doctor.name = name;
+            allDoctors.forEach(doc => {
+              if(doc.name == name) {
+                doctor.withLink = "/lk/doctors/doctor/"+doc.id
+              }
+            });
+
+            this.siteDoctors.forEach(doc => {
+              if(doc.name == name) {
+                doctor.job = doc.job;
+                doctor.image = doc.image;
+              }
+            });
+            this.favorites.push(doctor);
+          });
+
+
+          allDoctors.forEach(doc => {
+            var doctor = {
+              name: doc.name,
+              job: "",
+              link: "Записаться на прием",
+              image: "",
+              withLink: "/lk/doctors/doctor/"+doc.id,
+              display: true,
+              dir:"",
+            };
+
+            this.siteDoctors.forEach(siteDoc => {
+              if(siteDoc.name == doc.name) {
+                doctor.job = siteDoc.job;
+                doctor.image = siteDoc.image;
+              }
+            });
+
+            this.alldocs.push(doctor);
+          });
+        }
+      });
+    }
+  },
+
+
+
   methods: {
 
     changeFilter: function (event) {
@@ -287,15 +242,33 @@ export default {
     filterDocs: function () {
 
       let allDoctors = this.alldocs;
-
       //direction
       if(this.selectedDir.length){
-        allDoctors = allDoctors.filter((item) => {
-          if (this.selectedDir.indexOf(item.dir) !== -1) {
-            return true
-          }
-        })
-      } 
+        this.selectedDir.forEach(categoryId => {
+
+          axios.get('https://api.evromedica.by/cabinet/staff/'+categoryId,'',{
+              headers: {
+                'X-Pin': localStorage.getItem('code')
+              }
+          })
+          .then((res) => {
+            if(res.status === 200) {
+              res.data.forEach(element => {
+                allDoctors.forEach((allDoctor,i) => {
+                  if(allDoctor.name == element.name){
+                    allDoctors[i].dir = categoryId;
+                  }
+                });
+              });
+              allDoctors = allDoctors.filter((item) => {
+                if (this.selectedDir.indexOf(item.dir) !== -1) {
+                  return true
+                }
+              })
+            }
+          });
+        }); 
+      }
 
       //SORT
       if(this.selectedSort){
@@ -321,8 +294,63 @@ export default {
 
     },
   },
- 
-  
+  created() {
+    this.site_url = localStorage.getItem('site_url');
+    this.theme_path = localStorage.getItem('theme_path');
+
+
+    //filter
+    axios.get('https://api.evromedica.by/cabinet/services/categories/0/0/','',{
+      headers: {
+        'X-Pin': localStorage.getItem('code')
+      }
+    })
+    .then((res) => {
+      if(res.status === 200) {
+        res.data.forEach(element => {
+          this.direct.push({
+            value: element.id,
+            name: element.title
+          });
+        });
+      }
+      
+    });
+    
+
+    //fav doctors
+    var favDoctors = [];
+    axios.get('https://api.evromedica.by/cabinet/history/'+localStorage.getItem('patientId'),'',{
+        headers: {
+          'X-Pin': localStorage.getItem('code')
+        }
+    })
+    .then((res) => {
+      if(res.status === 200) {
+        res.data.forEach(element => {
+          let found = false;
+          favDoctors.forEach((fav,i) => {
+            if(fav.name == element.doctor) {
+              favDoctors[i].count++;
+              found = true;
+            }
+          });
+          if(!found) {
+            favDoctors.push({
+              name: element.doctor,
+              count: 1
+            });
+          }
+        });
+        favDoctors.sort((a, b) => (a.count > b.count) ? 1 : -1);
+        var sortedDoctors = [];
+        favDoctors.forEach((fav) => {
+          sortedDoctors.push(fav.name);
+        });
+        this.favDoctors = sortedDoctors;
+      }
+    });
+  }
 }
 </script>
 

@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import UserBlock from "@/components/UserBlock";
 import BottomAppbar from "@/components/BottomAppbar";
 import PageTitle from "@/components/PageTitle";
@@ -44,39 +45,11 @@ export default {
   },
   data: function () {
     return {
+      theme_path:"",
       pageTitle: "Визиты",
       currentTab: 0,
-      visits: [
-        {
-          link: "/visits/planned/",
-          name: "Ортопантомограмма",
-          planned: "Запланировано на 20.04.22, 9:00",
-          image: "img/common/vis-1.jpg"
-        },
-        {
-          link: "#",
-          name: "Ортопантомограмма",
-          planned: "Запланировано на 20.04.22, 9:00",
-          image: "img/common/vis-2.jpg"
-        },
-      ],
-      history: [
-        {
-          link: "#",
-          name: "Оториноларингология",
-          date: "22 марта"
-        },
-        {
-          link: "/visits/history/",
-          name: "Рентгенологические исследования (ортопантомограмма)",
-          date: "12 февраля"
-        },
-        {
-          link: "#",
-          name: "МРТ",
-          date: "29 декабря 2021"
-        },
-      ],
+      visits: [],
+      history: [],
       menuItems: [
         {
           icon: "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
@@ -84,7 +57,7 @@ export default {
               "          </svg>",
           name: "Услуги",
           isCenter: false,
-          link: "/services/",
+          link: "/lk/services/",
         },
         {
           icon: "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
@@ -96,7 +69,7 @@ export default {
               "</svg>",
           name: "Анализы",
           isCenter: false,
-          link: "/analyzes/",
+          link: "/lk/analyzes/",
         },
         {
           icon: "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
@@ -105,7 +78,7 @@ export default {
               "</svg>",
           name: "Запись",
           isCenter: true,
-          link: "/appointment/",
+          link: "/lk/appointment/",
         },
         {
           icon: "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
@@ -115,7 +88,7 @@ export default {
           name: "Визиты",
           isCenter: false,
           isActive: true,
-          link: "/visits/",
+          link: "/lk/visits/",
         },
         {
           icon: "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
@@ -126,12 +99,53 @@ export default {
               "</svg>",
           name: "Врачи",
           isCenter: false,
-          link: "/doctors/",
+          link: "/lk/doctors/",
         }
       ]
     }
   },
   methods: {},
+  created() {
+    this.theme_path = localStorage.getItem('theme_path');
+    //visits
+    axios.get('https://api.evromedica.by/cabinet/appointment/'+localStorage.getItem('patientId')+'/0','',{
+        headers: {
+          'X-Pin': localStorage.getItem('code')
+        }
+    })
+    .then((res) => {
+      if(res.status === 200) {
+        res.data.forEach(element => {
+            this.visits.push(
+              {
+                link: "/lk/visits/planned/?document="+element.documentId,
+                name: element.services[0].servicename,
+                planned: "Запланировано на "+element.visitdate_start,
+                image: (element.gender == 'Женский') ? this.theme_path+"img/common/vis-2.jpg" : this.theme_path+"img/common/vis-1.jpg"
+              }
+            );
+        });
+      }
+    });
+
+    //history
+    axios.get('https://api.evromedica.by/cabinet/history/'+localStorage.getItem('patientId'),'',{
+        headers: {
+          'X-Pin': localStorage.getItem('code')
+        }
+    })
+    .then((res) => {
+      if(res.status === 200) {
+        res.data.forEach(element => {
+          this.history.push({
+            link: "/lk/visits/history/?document="+element.documentId,
+            name: element.services[0].servicename,
+            date: element.visitdate_start
+          });
+        });
+      }
+    });
+  }
 }
 </script>
 

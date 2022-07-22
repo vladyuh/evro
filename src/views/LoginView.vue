@@ -70,7 +70,7 @@ export default {
             console.log(res);
             if(res.status === 200) {
               localStorage.setItem('patientId', res.data.patientId)
-              this.$router.push({path: 'code', query:{"phone": this.form.phone}})
+              this.$router.push({path: '/lk/code', query:{"phone": this.form.phone}})
             }
           })
           .catch((error) => {
